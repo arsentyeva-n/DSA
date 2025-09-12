@@ -1,35 +1,97 @@
 //@author: Natalya Arsentyeva
 
+
 #pragma once
+#include <iostream>
 
-// Шаблонный клас узел бинарного дерева
+
+// Узел бинарного дерева
 template <typename T>
-struct  TreeNode
+class TreeNode
 {
-	T data;						 // данные
-	TreeNode* left, * right;	 // потомки
+private:
+	// Тип данных
+	T data;					
+	// Указатели левого и правого узлов
+	TreeNode<T>* left;			
+	TreeNode<T>* right;
 
+public:
+	// Конструктор без параметров
+	TreeNode() = default;			
 
-	TreeNode();						// конструктор без параметров
-	TreeNode(T data1, TreeNode<T>* left1 = nullptr, TreeNode<T>* right1 = nullptr); // с параметрами по умолчанию
+	// C параметрами по умолчанию
+	// (передача идёт по ссылке const T&, то есть без копирования
+	// const гарантирует, что внутри конструктора аргумент нельзя изменить)
+	TreeNode(const T& data1, TreeNode<T>* left1 = nullptr, TreeNode<T>* right1 = nullptr); 
+
+	//Методы доступа (геттеры)
+	T Data() const;
+	TreeNode<T>* Left() const;
+	TreeNode<T>* Right() const;
+
+	// Методы изменения (сеттеры)
+	void setData(const T& data1);
+	void setLeft(TreeNode<T>* left1);
+	void setRight(TreeNode<T>* right1);
 };
 
-// конструктор без параметров
-template<typename T>
-// inline используется для запроса у компилятора обработки вашей функции как встраиваемой функции. 
-// Когда компилятор компилирует ваш код, все встраиваемые (inline) функции разворачиваются на месте, 
-//то есть вызов функции заменяется копией содержимого самой функции, что устраняет накладные расходы на вызов функции! 
-inline TreeNode<T>::TreeNode()
+// Конструктор инициализирует поля данных и указателей
+// (значение nullptr соответствует пустому поддереву)
+template <typename T>
+TreeNode<T>::TreeNode(const T& data1, TreeNode<T>* left1, TreeNode<T>* right1)
 {
-	this->left = nullptr;
-	this->right = nullptr;
+	data = data1;
+	left = left1;
+	right = right1;
 }
 
-// конструктор с параметров
-template<typename T>
-inline TreeNode<T>::TreeNode(T data1, TreeNode<T>* left1, TreeNode<T>* right1)
+// Метод Data возвращает значение поля данных
+template <typename T>
+T TreeNode<T>::Data() const
 {
-	this->left = left1;		// this представляет указатель на текущий объект данного класса
-	this->right = right1;
+	return this->data;
+}
+
+// Методы Left и Right возвращают значения полей левого и правого указателей
+template <typename T>
+TreeNode<T>* TreeNode<T>::Left() const 
+{
+	return this->left;
+}
+
+template <typename T>
+TreeNode<T>* TreeNode<T>::Right() const
+{
+	return this->right;
+}
+
+// Метод задания значения поля данных
+template <typename T>
+void TreeNode<T>::setData(const T& data1) {
 	this->data = data1;
-};
+}
+
+// Метод задания левого потомка
+template <typename T>
+void TreeNode<T>::setLeft(TreeNode<T>* left1)
+{
+	this->left = left1;
+}
+
+// Метод задания правого потомка
+template <typename T>
+void TreeNode<T>::setRight(TreeNode<T>* right1)
+{
+	right = right1;
+}
+
+// Рекурсивное удаление узлов дерева
+template <typename T>
+void deleteTree(TreeNode<T>* node)
+{
+	if (node==nullptr) return;
+	deleteTree(node->Left());
+	deleteTree(node->Right());
+	delete node;
+}

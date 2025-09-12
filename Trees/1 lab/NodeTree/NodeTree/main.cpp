@@ -9,33 +9,38 @@ using namespace std;
 
 int main() {
     setlocale(LC_ALL, "RUS");
-    // Создаем узлы
-    TreeNode<int>* node1 = new TreeNode<int>(5, nullptr, nullptr);
-    TreeNode<int>* node2 = new TreeNode<int>(4, nullptr, nullptr);
-    TreeNode<int>* node4 = new TreeNode<int>(3, node2, node1);
-    TreeNode<int>* node3 = new TreeNode<int>(2, nullptr, nullptr);
-    TreeNode<int>* root = new TreeNode<int>(1, node3, node4);
+    // Создание узлов
+    TreeNode<int>* n1 = new TreeNode<int>(1);
+    TreeNode<int>* n2 = new TreeNode<int>(2);
+    TreeNode<int>* n3 = new TreeNode<int>(3);
+    TreeNode<int>* n4 = new TreeNode<int>(4);
+    TreeNode<int>* n5 = new TreeNode<int>(5);
 
-    /*   1
-      2     3
-          4   5                      */
+    // Построение дерева
+    //           1
+    //         /   \
+    //        2     3
+    //             / \
+    //            4   5
+    n1->setLeft(n2);
+    n1->setRight(n3);
+    n2->setLeft(n4);
+    n2->setRight(n5);
+    
+    cout << "Корень дерева: " << n1->Data() << endl;
+    cout << "Левый потомок корня: " << n1->Left()->Data() << endl;
+    cout << "Правый потомок корня: " << n1->Right()->Data() << endl;
 
-          // Выводим дерево
-    cout << "Дерево из 5 узлов:\n";
-    cout << "    " << root->data << "\n";
-    cout << "  " << root->left->data << "   " << root->right->data << "\n";
-    cout << "     " << root->right->left->data << "  " << root->right->right->data << "\n";
+    cout << "Дерево:\n";
+    cout << "       1\n";
+    cout << "     /   \\\n";
+    cout << "    2     3\n";
+    cout << "         / \\\n";
+    cout << "        4   5\n";
 
-    // Обращаемся к содержимому узлов
-    cout << "Содержимое узла 1: " << node1->data << std::endl;
-    cout << "Содержимое узла 3: " << node3->data << std::endl;
+    deleteTree(n1);
 
-    // Удаляем узлы
-    delete node1;
-    delete node2;
-    delete node3;
-    delete node4;
-    delete root;
+    cout << "Корень дерева: " << n1->Data() << endl;
 
     return 0;
 }
