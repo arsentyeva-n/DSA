@@ -127,7 +127,7 @@ void printLRN(TreeNode<T>* root) {
 	}
 }
 
-// добавление узла в вектор
+// NLR vector
 template<typename T>
 void createVectorNLR(TreeNode<T>* root, vector<T>& array) {
 	if (root != nullptr) {
@@ -137,6 +137,27 @@ void createVectorNLR(TreeNode<T>* root, vector<T>& array) {
 	}
 }
 
+// LNR vector
+template<typename T>
+void createVectorLNR(TreeNode<T>* root, vector<T>& array) {
+	if (root != nullptr) {
+		createVectorLNR(root->Left(), array);
+		array.push_back(root->Data());
+		createVectorLNR(root->Right(), array);
+	}
+}
+
+// LNR vector
+template<typename T>
+void createVectorLRN(TreeNode<T>* root, vector<T>& array) {
+	if (root != nullptr) {
+		createVectorLNR(root->Left(), array);
+		createVectorLNR(root->Right(), array);
+		array.push_back(root->Data());
+	}
+}
+
+
 // Вывод значений вектора
 template<typename T>
 void printVector(vector<T>& array) {
@@ -144,4 +165,30 @@ void printVector(vector<T>& array) {
 		cout << element << " ";
 	}
 	cout << endl;
+}
+
+// Поиск максимальной глубины
+template<typename T>
+int findDepth(TreeNode<T>* root)
+{
+	if (root == nullptr) {
+		return -1; 
+	}
+	// Найти максимальную глубину левого поддерева
+	int leftDepth = findDepth(root->Left());
+
+	// Найти максимальную глубину правого поддерева
+	int rightDepth = findDepth(root->Right());
+
+	return max(leftDepth, rightDepth) + 1;
+}
+
+// Подсчёт узлов
+template<typename T>
+int countNode(TreeNode<T>* node)
+{
+	/*if (node == nullptr) {
+		return 0;
+	}*/
+	return countNode(node->Left()) + countNode(node->Right()) + 1;
 }

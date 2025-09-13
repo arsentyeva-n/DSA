@@ -40,16 +40,30 @@ int main() {
 
    
     // Прямой, симметричный и обратный обходы
-    printNLR(n1);
+    /*printNLR(n1);
     cout << endl;
     printLNR(n1);
     cout << endl;
     printLRN(n1);
-    cout << endl;
+    cout << endl;*/
 
     vector<int> arrayNLR;                   // Пустой вектор для хранения значений
-    createVectorNLR(n1, arrayNLR);        // Заполнение вектора значениями
-    printVector(arrayNLR);                  // Использование вектора с результатами
+    createVectorNLR(n1, arrayNLR);          // Заполнение вектора значениями
+    printVector(arrayNLR);                  // Вывод вектора
+
+    vector<int> arrayLNR;
+    createVectorLNR(n1, arrayLNR);
+    printVector(arrayLNR);
+
+    vector<int> arrayLRN;
+    createVectorLRN(n1, arrayLRN);
+    printVector(arrayLRN);
+
+    // Поиск глубины дерева
+    cout << findDepth(n1) << endl;
+
+    //// Подсчет узлов дерева
+    //cout << countNode(n1) << endl;
 
     deleteTree(n1);
 
