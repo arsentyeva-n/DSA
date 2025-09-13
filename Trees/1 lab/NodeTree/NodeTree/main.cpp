@@ -24,8 +24,8 @@ int main() {
     //            4   5
     n1->setLeft(n2);
     n1->setRight(n3);
-    n2->setLeft(n4);
-    n2->setRight(n5);
+    n3->setLeft(n4);
+    n3->setRight(n5);
     
     cout << "Корень дерева: " << n1->Data() << endl;
     cout << "Левый потомок корня: " << n1->Left()->Data() << endl;
@@ -38,9 +38,20 @@ int main() {
     cout << "         / \\\n";
     cout << "        4   5\n";
 
-    deleteTree(n1);
+   
+    // Прямой, симметричный и обратный обходы
+    printNLR(n1);
+    cout << endl;
+    printLNR(n1);
+    cout << endl;
+    printLRN(n1);
+    cout << endl;
 
-    cout << "Корень дерева: " << n1->Data() << endl;
+    vector<int> arrayNLR;                   // Пустой вектор для хранения значений
+    createVectorNLR(n1, arrayNLR);        // Заполнение вектора значениями
+    printVector(arrayNLR);                  // Использование вектора с результатами
+
+    deleteTree(n1);
 
     return 0;
 }

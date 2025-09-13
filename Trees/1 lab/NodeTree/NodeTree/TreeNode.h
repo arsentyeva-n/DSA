@@ -3,7 +3,8 @@
 
 #pragma once
 #include <iostream>
-
+#include <vector>
+using namespace std;
 
 // Узел бинарного дерева
 template <typename T>
@@ -88,10 +89,59 @@ void TreeNode<T>::setRight(TreeNode<T>* right1)
 
 // Рекурсивное удаление узлов дерева
 template <typename T>
-void deleteTree(TreeNode<T>* node)
+void deleteTree(TreeNode<T>* root)
 {
-	if (node==nullptr) return;
-	deleteTree(node->Left());
-	deleteTree(node->Right());
-	delete node;
+	if (root==nullptr) return;
+	deleteTree(root->Left());
+	deleteTree(root->Right());
+	delete root;
+}
+
+// Прямой обход(NLR)
+template<typename T>
+void printNLR(TreeNode<T>* root) {
+	if (root != nullptr) {
+		cout << root->Data() << " ";	//Показываем поле данные текущего узла).
+		printNLR(root->Left());			//Обходим левое поддерево рекурсивно, вызвав функцию прямого обхода.
+		printNLR(root->Right());		//Обходим правое поддерево рекурсивно, вызвав функцию прямого обхода.
+	}
+}
+
+// Симметричный обход(LNR)
+template<typename T>
+void printLNR(TreeNode<T>* root) {
+	if (root != nullptr) {
+		printLNR(root->Left());			//Обходим левое поддерево рекурсивно, вызвав функцию центрированного обхода.
+		cout << root->Data() << " ";			//Показываем поле данные текущего узла).
+		printLNR(root->Right());		//Обходим правое поддерево рекурсивно, вызвав функцию центрированного обхода.
+	}
+}
+
+// Обратный обход(LRN)
+template<typename T>
+void printLRN(TreeNode<T>* root) {
+	if (root != nullptr) {
+		printLRN(root->Left());			//Обходим левое поддерево рекурсивно, вызвав функцию обратного обхода.
+		printLRN(root->Right());		//Обходим правое поддерево рекурсивно, вызвав функцию обратного обхода.
+		cout << root->Data() << " ";			//Показываем поле данные текущего узла).
+	}
+}
+
+// добавление узла в вектор
+template<typename T>
+void createVectorNLR(TreeNode<T>* root, vector<T>& array) {
+	if (root != nullptr) {
+		array.push_back(root->Data());
+		createVectorNLR(root->Left(), array);
+		createVectorNLR(root->Right(), array);
+	}
+}
+
+// Вывод значений вектора
+template<typename T>
+void printVector(vector<T>& array) {
+	for (const auto& element : array) {
+		cout << element << " ";
+	}
+	cout << endl;
 }

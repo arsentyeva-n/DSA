@@ -1,7 +1,7 @@
 //@author: Natalya Arsentyeva
 
 #include "pch.h"
-#include "../../NodeTree/NodeTree/TreeNode.h"
+#include "../NodeTree/NodeTree/TreeNode.h"
 
 
 
@@ -19,11 +19,11 @@ TEST(TreeNodeTest, Setters)
 {
     TreeNode<int>* left = new TreeNode<int>(5);    // Создаём левый дочерний узел
     TreeNode<int>* right = new TreeNode<int>(15);  // Создаём правый дочерний узел
-    TreeNode<int> root(10, left, right);           // Создаём корень с двумя детьми
+    TreeNode<int> root(10, left, right);           // Создаём корень с двумя узлами
 
-    EXPECT_EQ(root.Left()->Data(), 5);            // Проверяем левый потомок
-    EXPECT_EQ(root.Right()->Data(), 15);          // Проверяем правый потомок
+    EXPECT_EQ(root.Left()->Data(), 5);            // Проверяем левого потомка
+    EXPECT_EQ(root.Right()->Data(), 15);          // Проверяем правого потомка
 
-    delete left;                                  // Освобождаем память для левого узла
-    delete right;                                 // Освобождаем память для правого узла
+    delete left;                                  
+    delete right;                                 
 }
