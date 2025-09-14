@@ -4,6 +4,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <queue>
 using namespace std;
 
 // Узел бинарного дерева
@@ -89,14 +90,19 @@ void TreeNode<T>::setRight(TreeNode<T>* right1)
 
 // Рекурсивное удаление узлов дерева
 template <typename T>
-void deleteTree(TreeNode<T>* root)
+TreeNode<T>* deleteTree(TreeNode<T>* root)
 {
-	if (root==nullptr) return;
+	if (root != nullptr) { 
+	
+	// Удаляем в порядке LRN
 	deleteTree(root->Left());
 	deleteTree(root->Right());
 	delete root;
+	}
+	return nullptr;
 }
 
+// Все обходы: O(n), где n - количество узлов
 // Прямой обход(NLR)
 template<typename T>
 void printNLR(TreeNode<T>* root) {
@@ -167,28 +173,65 @@ void printVector(vector<T>& array) {
 	cout << endl;
 }
 
-// Поиск максимальной глубины
+// Поиск максимальной глубины  O(n) - посещаем каждый узел один раз
 template<typename T>
 int findDepth(TreeNode<T>* root)
-{
+{	
+	// Если дерево пустое
 	if (root == nullptr) {
-		return -1; 
+		return -1;
 	}
+
 	// Найти максимальную глубину левого поддерева
 	int leftDepth = findDepth(root->Left());
 
 	// Найти максимальную глубину правого поддерева
 	int rightDepth = findDepth(root->Right());
 
-	return max(leftDepth, rightDepth) + 1;
+	// Максимальное поддерево + сам корень
+	return max(leftDepth, rightDepth) + 1; 
 }
 
-// Подсчёт узлов
+// Подсчёт узлов  O(n) - посещаем каждый узел один раз
 template<typename T>
 int countNode(TreeNode<T>* node)
 {
-	/*if (node == nullptr) {
+	// Базовый случай
+	if (node == nullptr) {
 		return 0;
-	}*/
-	return countNode(node->Left()) + countNode(node->Right()) + 1;
+	}
+	// Рекурсивно считаем узлы в левом поддереве
+	int left_count = countNode(node->Left());
+
+	// Найти максимальную глубину правого поддерева
+	int right_count = countNode(node->Right());
+
+	return  left_count  + right_count + 1;
 }
+
+// Печать, используя обход в ширину
+template <typename T>
+void BFS(TreeNode<T>* root)
+{
+	// Если дерево не пустое
+	if (root != nullptr) {
+		queue <TreeNode<T>*> q;
+		// Сохраняем корень в очередь
+		q.push(root);
+
+		// Пока очередь не пустая
+		while (!q.empty()) {
+			// Извлекаем первый элемент из очереди и выводим его
+			TreeNode<T>* node = q.front();
+			cout << node->Data() << " ";
+			q.pop(); // Удаляем первый элемент из очереди
+
+			// Добавляем в очередь левого и правого потомка (если существуют)
+			if (node->Left() != nullptr)
+				q.push(node->Left());
+			if (node->Right() != nullptr)
+				q.push(node->Right());
+		}
+	}
+}
+

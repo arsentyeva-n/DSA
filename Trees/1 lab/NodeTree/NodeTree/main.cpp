@@ -60,12 +60,20 @@ int main() {
     printVector(arrayLRN);
 
     // Поиск глубины дерева
-    cout << findDepth(n1) << endl;
+    cout << "Глубина дерева: " << findDepth(n1) << endl;
 
-    //// Подсчет узлов дерева
-    //cout << countNode(n1) << endl;
+    // Подсчет узлов дерева
+    cout << "Кол-во узлов: " << countNode(n1) << endl;
 
-    deleteTree(n1);
+    // Печать, используя BFS
+    BFS(n1);
+
+    // Удаление дерева
+    n1 = deleteTree(n1);
+    
+    // Проверка, что дерево удалено
+    cout << "\nКоличество узлов: " << countNode(n1) << endl;
+    cout << "Глубина дерева: " << findDepth(n1) << endl;
 
     return 0;
 }
