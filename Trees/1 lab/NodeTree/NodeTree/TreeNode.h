@@ -88,6 +88,8 @@ void TreeNode<T>::setRight(TreeNode<T>* right1)
 	right = right1;
 }
 
+
+// Функции для бинарного дерева
 // Рекурсивное удаление узлов дерева
 template <typename T>
 TreeNode<T>* deleteTree(TreeNode<T>* root)
@@ -153,12 +155,12 @@ void createVectorLNR(TreeNode<T>* root, vector<T>& array) {
 	}
 }
 
-// LNR vector
+// LRN vector
 template<typename T>
 void createVectorLRN(TreeNode<T>* root, vector<T>& array) {
 	if (root != nullptr) {
-		createVectorLNR(root->Left(), array);
-		createVectorLNR(root->Right(), array);
+		createVectorLRN(root->Left(), array);
+		createVectorLRN(root->Right(), array);
 		array.push_back(root->Data());
 	}
 }
