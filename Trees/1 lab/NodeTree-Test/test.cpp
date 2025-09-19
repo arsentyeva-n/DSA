@@ -1,7 +1,7 @@
 //@author: Natalya Arsentyeva
 
 #include "pch.h"
-#include "../../NodeTree/NodeTree/TreeNode.h"
+#include "../NodeTree/TreeNode.h"
 
 
 // Тестирование бинарного узла
@@ -184,8 +184,8 @@ TEST(TestTreeNode, TestVectorNLR_LNR_LRN) {
     //expected.clear();
 
     //deleteTree(root1);
-     
-     
+
+
     // Создаётся указатель на корень дерева 
     TreeNode<int>* root1 = createTree1();
 
@@ -238,19 +238,19 @@ TEST(TestTreeNode, TestVectorNLR_LNR_LRN) {
     // Вырожденное влево
     TreeNode<int>* root3 = createTree3();
 
-    expected = {60, 42, 14, 21, 13};
+    expected = { 60, 42, 14, 21, 13 };
     createVectorNLR(root3, result);
     EXPECT_EQ(result, expected);
     result.clear();
     expected.clear();
 
-    expected = {13, 21, 14, 42, 60};
+    expected = { 13, 21, 14, 42, 60 };
     createVectorLNR(root3, result);
     EXPECT_EQ(result, expected);
     result.clear();
     expected.clear();
 
-    expected = {13, 21, 14, 42, 60};
+    expected = { 13, 21, 14, 42, 60 };
     createVectorLRN(root3, result);
     EXPECT_EQ(result, expected);
     result.clear();
@@ -261,7 +261,7 @@ TEST(TestTreeNode, TestVectorNLR_LNR_LRN) {
     // Завершённое дерево
     TreeNode<int>* root4 = createTree4();
 
-    expected = {8, 4, 2, 1, 3, 7, 5, 10, 9, 30};
+    expected = { 8, 4, 2, 1, 3, 7, 5, 10, 9, 30 };
     createVectorNLR(root4, result);
     EXPECT_EQ(result, expected);
     result.clear();
