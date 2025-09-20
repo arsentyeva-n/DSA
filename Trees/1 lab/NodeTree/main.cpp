@@ -67,65 +67,76 @@ int main() {
     // Подсчет узлов дерева
     cout << "Кол-во узлов: " << countNode(n1) << endl;
 
+
+    cout << "\nКопирование дерева" ;
+    TreeNode<int>* newT;
+    newT = copyTree(n1);
+    cout << "\nСкопированное дерево: ";
+
     // Печать, используя BFS
-    BFS(n1);
+    BFS(newT);
+
+    //printSqr(newT);
 
     // Удаление дерева
     n1 = deleteTree(n1);
+    newT = deleteTree(newT);
 
     // Проверка, что дерево удалено
     cout << "\nКоличество узлов: " << countNode(n1) << endl;
     cout << "Глубина дерева: " << findDepth(n1) << endl;
+    
+   
 
 
-    cout << "\nБинарное дерево поиска: " << endl;
 
-    //     8
-    //    / \
-    //   3   10
-    //  / \
-    // 1   6
-    //    /
-    //   4
+    //cout << "\nБинарное дерево поиска: " << endl;
 
-    // Создание узлов и построение дерева
-    // указатели на узлы дерева 
-    /*TreeNode<int>* lnode, * rnode, * root;*/
-    TreeNode<int>* lnode = new TreeNode<int>(4);                    // создание левого узла без потомков
-    TreeNode<int>* rnode = new TreeNode<int>(6, lnode, nullptr);    // создание правого узла 6 с левым потомком
-    lnode = new TreeNode<int>(1);                                   // создание нового левого узла без потомков
-    TreeNode<int>* root = new TreeNode<int>(3,lnode,rnode);         // создание поддерева с потомками от 3
-    lnode = root;                                                   // после это поддерево становится левым потомком
-    rnode = new TreeNode<int>(10);
-    root = new TreeNode<int>(8, lnode, rnode);                      // основной корень этого дерева
+    ////     8
+    ////    / \
+    ////   3   10
+    ////  / \
+    //// 1   6
+    ////    /
+    ////   4
 
-    cout << "Дерево:\n";
-    cout << "       8\n";
-    cout << "     /   \\\n";
-    cout << "    3     10\n";
-    cout << "   / \\\n";
-    cout << "  1   6       \n";
-    cout << "     /         \n";
-    cout << "    4           \n";
+    //// Создание узлов и построение дерева
+    //// указатели на узлы дерева 
+    ///*TreeNode<int>* lnode, * rnode, * root;*/
+    //TreeNode<int>* lnode = new TreeNode<int>(4);                    // создание левого узла без потомков
+    //TreeNode<int>* rnode = new TreeNode<int>(6, lnode, nullptr);    // создание правого узла 6 с левым потомком
+    //lnode = new TreeNode<int>(1);                                   // создание нового левого узла без потомков
+    //TreeNode<int>* root = new TreeNode<int>(3,lnode,rnode);         // создание поддерева с потомками от 3
+    //lnode = root;                                                   // после это поддерево становится левым потомком
+    //rnode = new TreeNode<int>(10);
+    //root = new TreeNode<int>(8, lnode, rnode);                      // основной корень этого дерева
 
-    cout << "\nВывод дерева: ";
-    BFS(root);
+    //cout << "Дерево:\n";
+    //cout << "       8\n";
+    //cout << "     /   \\\n";
+    //cout << "    3     10\n";
+    //cout << "   / \\\n";
+    //cout << "  1   6       \n";
+    //cout << "     /         \n";
+    //cout << "    4           \n";
 
-    cout << "\nМинимальный узел: " << minNode(root)->Data() << endl;
-    cout << "Максимальный узел: " << maxNode(root)->Data() << endl;
+    //cout << "\nВывод дерева: ";
+    //BFS(root);
 
-
-    cout << "\nНахождение следующего наибольшего для 10: ";
-    TreeNode<int>* s = nullptr;
-    Successor(root, s, 10);
-    if (s != nullptr) {
-        cout << s->Data();
-    }
-    else cout << "Не существует\n";
+    //cout << "\nМинимальный узел: " << findMin(root)->Data() << endl;
 
 
-    // Удаление дерева
-    root = deleteTree(root);
+    //cout << "\nНахождение следующего наибольшего для 10: ";
+    //TreeNode<int>* s = nullptr;
+    //Successor(root, s, 10);
+    //if (s != nullptr) {
+    //    cout << s->Data();
+    //}
+    //else cout << "Не существует\n";
+
+
+    //// Удаление дерева
+    //root = deleteTree(root);
 
     return 0;
 }

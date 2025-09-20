@@ -89,7 +89,9 @@ void TreeNode<T>::setRight(TreeNode<T>* right1)
 }
 
 
-// Функции для бинарного дерева
+/// Функции для бинарного дерева
+
+
 // Рекурсивное удаление узлов дерева
 template <typename T>
 TreeNode<T>* deleteTree(TreeNode<T>* root)
@@ -194,10 +196,11 @@ int findDepth(TreeNode<T>* root)
 	return max(leftDepth, rightDepth) + 1; 
 }
 
+
 // Подсчёт узлов  O(n) - посещаем каждый узел один раз
 template<typename T>
-int countNode(TreeNode<T>* node)
-{
+size_t countNode(TreeNode<T>* node)   // todo size t
+{ 
 	// Базовый случай
 	if (node == nullptr) {
 		return 0;
@@ -211,9 +214,10 @@ int countNode(TreeNode<T>* node)
 	return  left_count  + right_count + 1;
 }
 
+
 // Печать, используя обход в ширину
 template <typename T>
-void BFS(TreeNode<T>* root)
+void BFS(TreeNode<T>* root)							// todo зачем очередь?
 {
 	// Если дерево не пустое
 	if (root != nullptr) {
@@ -237,79 +241,60 @@ void BFS(TreeNode<T>* root)
 	}
 }
 
+// Копирование дерева
+template <typename T>
+TreeNode<T>* copyTree(TreeNode<T>* oldTree) {
+
+	TreeNode<T>* newleft, * newright, * newroot;
+
+	// остановить рекурсивное прохождение при достижении пустого дерева
+	if (oldTree == nullptr)
+		return nullptr;
+
+	// CopyTree строит новое дерево в процессе прохождения узлов копируемого дерева, в каждом
+	// узле этого дерева функция CopyTree проверяет наличие левого потомка, если он
+	// есть, создается его копия, в противном случае возвращается nullprt
+	if (oldTree->Left() != nullptr)
+		newleft = copyTree(oldTree->Left());
+	else
+		newleft = nullptr;
+
+	// проверка правого потомка
+	if (oldTree->Right() != nullptr)
+		newright = copyTree(oldTree->Right());
+	else
+		newright = nullptr;
+
+	// Построение нового дерева снизу вверх
+	newroot = new TreeNode<T>(oldTree->Data(), newleft, newright);
+
+	return newroot;
+}
+
+
+//// Функция возведения в квадрат
+//template <typename T>
+//void printSqr(TreeNode<T>*& root) {
+//	if (root != nullptr) {
+//		setData() 
+//	}
+//}
+
+
 
 /// Бинарное дерево поиска
-
-//// поиск узла по значению
-//// возвращает уровень, на котором был найден узел
-//// либо -1, если узла с искомым значением нет
-//template <typename T>
-//int SearchNode(TreeNode<T>* root, const T key, int depth = 0) {
-//	// если дошли до nullptr, до искомого значения в дереве нет
-//	if (root == nullptr) {
-//		return -1;
-//	}
-//
-//	// поиск в правом поддереве
-//	if (key > root->Data()) {
-//		SearchNode(root->Right(), key, depth + 1);
-//	}
-//
-//	// поиск в левом поддереве
-//	else if (key < root->Data()) {
-//		SearchNode(root->Left(), key, depth + 1);
-//	}
-//
-//	// если key равен значению в текущем узле
-//	else return depth;
-//}
-//
-//// операция вставки узла в бинарное дерево поиска
-//template <typename T>
-//TreeNode<T>* InsertNode(TreeNode<T>* root, const T value) {
-//
-//	if (root == nullptr) {
-//
-//		// если дерево пустое, то создаём корень (первый узел)
-//		return new TreeNode<T>(value);
-//	}
-//
-//	// Вставляем данные либо в левое, либо в правое поддерево
-//	if (value > root->Data()) {
-//		// если значение, которое нужно добавить, больше текущего
-//		root->SetRight(InsertNode(root->Right(), value));
-//	}
-//	else if (value < root->Data()) {
-//		// если значение, которое нужно добавить, меньше текущего
-//		root->SetLeft(InsertNode(root->Left(), value));
-//	}
-//
-//	//возвращаем корень дерева
-//	return root;
-//}
 
 
 // Нахождение минимального узла в поддереве
 template <typename T>
-TreeNode<T>* minNode(TreeNode<T>* root)
+TreeNode<T>* findMin(TreeNode<T>* root)
 {
 	while (root->Left() != nullptr) {
 		root = root->Left();
 	}
-
 	return root;
 }
 
-// Нахождение максимального узла в поддереве
-template <typename T>
-TreeNode<T>* maxNode(TreeNode<T>* root)
-{
-	while (root->Right() != nullptr) {
-		root = root->Right();
-	}
-
-	return root;
-}
 
 // Нахождение ближайшего наибольшего
 template <typename T>
@@ -326,7 +311,7 @@ void Successor(TreeNode<T>* root, TreeNode<T>*& succ, int key) {
 		// если есть правый потомок
 		if (root->Right() != nullptr) {
 			// находим самый левый узел от правого потомка
-			succ = minNode(root->Right());
+			succ = findMin(root->Right());
 		}
 	}
 
@@ -336,10 +321,45 @@ void Successor(TreeNode<T>* root, TreeNode<T>*& succ, int key) {
 		succ = root;
 		Successor(root->Left(), succ, key);
 	}
-	else {
+	else { // key > root->Data()  
 		Successor(root->Right(), succ, key);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+//// Поиск узла по значению
+//template <typename T>
+//void SearchNode(TreeNode<T>* root, const T key) {
+//	TreeNode<T>* current = root;
+//	if (current->Data() == key) {
+//		cout << "Найден";
+//	}
+//	else if (current->Data() < key) {
+//		current = current->Right();
+//
+//	}
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // операция удаления узла из бинарного дерева поиска
 //template <typename T>
@@ -444,4 +464,52 @@ void Successor(TreeNode<T>* root, TreeNode<T>*& succ, int key) {
 //	// вернуть указатель на вновь созданное дерево
 //	return newnode;
 //
+//}
+
+//// поиск узла по значению
+//// возвращает уровень, на котором был найден узел
+//// либо -1, если узла с искомым значением нет
+//template <typename T>
+//int SearchNode(TreeNode<T>* root, const T key, int depth = 0) {
+//	// если дошли до nullptr, до искомого значения в дереве нет
+//	if (root == nullptr) {
+//		return -1;
+//	}
+//
+//	// поиск в правом поддереве
+//	if (key > root->Data()) {
+//		SearchNode(root->Right(), key, depth + 1);
+//	}
+//
+//	// поиск в левом поддереве
+//	else if (key < root->Data()) {
+//		SearchNode(root->Left(), key, depth + 1);
+//	}
+//
+//	// если key равен значению в текущем узле
+//	else return depth;
+//}
+//
+//// операция вставки узла в бинарное дерево поиска
+//template <typename T>
+//TreeNode<T>* InsertNode(TreeNode<T>* root, const T value) {
+//
+//	if (root == nullptr) {
+//
+//		// если дерево пустое, то создаём корень (первый узел)
+//		return new TreeNode<T>(value);
+//	}
+//
+//	// Вставляем данные либо в левое, либо в правое поддерево
+//	if (value > root->Data()) {
+//		// если значение, которое нужно добавить, больше текущего
+//		root->SetRight(InsertNode(root->Right(), value));
+//	}
+//	else if (value < root->Data()) {
+//		// если значение, которое нужно добавить, меньше текущего
+//		root->SetLeft(InsertNode(root->Left(), value));
+//	}
+//
+//	//возвращаем корень дерева
+//	return root;
 //}
