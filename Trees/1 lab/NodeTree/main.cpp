@@ -124,9 +124,9 @@ int main() {
     InsertNode(root, 7);
     BFS(root);
 
-    cout << "\nНахождение следующего наибольшего для 7: ";
+    cout << "\nНахождение следующего наибольшего для 8: ";
     TreeNode<int>* s = nullptr;
-    s = Successor(root, 7);
+    s = Successor(root, 8);
     if (s != nullptr) {
         cout << s->Data();
     }

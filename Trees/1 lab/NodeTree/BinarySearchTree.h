@@ -16,7 +16,7 @@ class BinarySearchTree
 		TreeNode<T>* current;
 
 		// Число элементов дерева 
-		int size;
+		size_t size;
 
 
 	public:
@@ -24,13 +24,18 @@ class BinarySearchTree
 		BinarySearchTree();
 
 		// Конструктор с параметром
-		BinarySearchTree(TreeNode<T>* tree);
+		BinarySearchTree(TreeNode<T>* tree, size_t size = 0);
 
 		// Деструктор
 		~BinarySearchTree() { deleteTree(this->root); };
 
-		TreeNode<T>*
-
+		size_t Size() const {return Size};
+		TreeNode<T>* insert(TreeNode<T>* tree);
+		TreeNode<T>* remove(TreeNode<T>* tree);
+		TreeNode<T>* get_root(TreeNode<T>* tree) {return root};
+		TreeNode<T>* clear(TreeNode<T>* tree) { return deleteTree(this->root); };
+		bool empty(TreeNode<T>* tree);
+		size_t height();
 };
 
 
