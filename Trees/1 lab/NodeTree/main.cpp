@@ -71,7 +71,7 @@ int main() {
     cout << "\nКопирование дерева" ;
     TreeNode<int>* newT;
     newT = copyTree(n1);
-    calcTree(newT);
+    //calcTree(newT);
     cout << "\nСкопированное дерево, вывод по уровням: " << endl;
     // Печать, используя обход в ширину
     BFS(newT);
@@ -124,9 +124,9 @@ int main() {
     InsertNode(root, 7);
     BFS(root);
 
-    cout << "\nНахождение следующего наибольшего для 8: ";
+    cout << "\nНахождение следующего наибольшего для 7: ";
     TreeNode<int>* s = nullptr;
-    s = Successor(root, 8);
+    s = Successor(root, 7);
     if (s != nullptr) {
         cout << s->Data();
     }
@@ -139,6 +139,29 @@ int main() {
 
     // Удаление дерева
     root = deleteTree(root);
+    // Создание узлов
+    TreeNode<int>* n11 = new TreeNode<int>(10);/*
+    TreeNode<int>* n12 = new TreeNode<int>(8);
+    TreeNode<int>* n13 = new TreeNode<int>(12);
+    TreeNode<int>* n14 = new TreeNode<int>(11);
+    TreeNode<int>* n15 = new TreeNode<int>(14);*/
+
+    // Построение дерева
+    //           10
+    //         /   \
+    //        8     12
+    //             / \
+    //            11   14
+    //n11->setLeft(n12);
+    //n11->setRight(n13);
+    //n13->setLeft(n14);
+    //n13->setRight(n15);
+
+    
+    removeNode(n11, 10);
+    BFS(n11);
+    n11 = deleteTree(n11);
+
 
     return 0;
 }

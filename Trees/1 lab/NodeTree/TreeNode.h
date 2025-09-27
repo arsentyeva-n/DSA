@@ -198,7 +198,7 @@ template<typename T>
 void calcTree(TreeNode<T>* root) {
 	// Если дерево не пустое
 	if (root != nullptr) {
-		// Вовзводим в квадрат текущий узел, проход методом preorder (NLR)
+		// Умножаем на 3, проход методом preorder (NLR)
 		root->setData(root->Data() * 3);
 		// Обработка левого поддерева
 		calcTree(root->Left());
@@ -249,6 +249,7 @@ size_t countNode(TreeNode<T>* node)
 template <typename T>
 void BFS(TreeNode<T>* root)							// todo зачем очередь?
 {
+	cout << endl;
 	// Если дерево не пустое
 	if (root != nullptr) {
 		// создаем очередь
@@ -417,7 +418,7 @@ TreeNode<T>* Successor(TreeNode<T>* root, const T& key) {
 		}
 	}
 	// Если узел не найден
-	return nullptr;
+	return successor;
 }
 
 // Симметричный обход(отсортированный порядок) 
@@ -445,7 +446,7 @@ TreeNode<T>* removeNode(TreeNode<T>* root, const T key) {
 	// Базовый случай
 	if (root == nullptr) { return root; }
 
-	else {
+	
 		TreeNode<T>* current = root;   // Текущий узел	
 		TreeNode<T>* parent = nullptr; // Храним родителя текущего узла
 
@@ -461,14 +462,13 @@ TreeNode<T>* removeNode(TreeNode<T>* root, const T key) {
 				// Идем вправо
 				current = current->Right();
 			}
-
 			
 		}
 		// Узел не найден
 		if (current == nullptr) { 
 			return root; }
 		// Дерево с одним узлом удаляется
-		if (parent == nullptr) {
+		if (key == current->Data() && parent == nullptr && current->Left() == nullptr && current->Right() == nullptr) {
 			delete root;
 			return nullptr;
 		}
@@ -525,7 +525,7 @@ TreeNode<T>* removeNode(TreeNode<T>* root, const T key) {
 				current->setData(temp);
 			}
 		}
-	}
+	
 	return root;
 }
 

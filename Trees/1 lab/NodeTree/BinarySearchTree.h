@@ -29,7 +29,7 @@ class BinarySearchTree
 		// Деструктор
 		~BinarySearchTree() { deleteTree(this->root); };
 
-		size_t Size() const {return Size};
+		size_t Size() const {return size};
 		TreeNode<T>* insert(TreeNode<T>* tree);
 		TreeNode<T>* remove(TreeNode<T>* tree);
 		TreeNode<T>* get_root(TreeNode<T>* tree) {return root};
