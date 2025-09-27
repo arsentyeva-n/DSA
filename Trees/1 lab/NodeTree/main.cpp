@@ -71,9 +71,9 @@ int main() {
     cout << "\nКопирование дерева" ;
     TreeNode<int>* newT;
     newT = copyTree(n1);
-    cout << "\nСкопированное дерево: ";
-
-    // Печать, используя BFS
+    calcTree(newT);
+    cout << "\nСкопированное дерево, вывод по уровням: " << endl;
+    // Печать, используя обход в ширину
     BFS(newT);
 
     //printSqr(newT);
@@ -83,60 +83,62 @@ int main() {
     newT = deleteTree(newT);
 
     // Проверка, что дерево удалено
-    cout << "\nКоличество узлов: " << countNode(n1) << endl;
+    cout << "\nКоличество узлов: " << countNode(newT) << endl;
     cout << "Глубина дерева: " << findDepth(n1) << endl;
     
-   
 
 
+    cout << "\nБинарное дерево поиска: " << endl;
 
-    //cout << "\nБинарное дерево поиска: " << endl;
+    //     8
+    //    / \
+    //   3   10
+    //  / \
+    // 1   6
+    //    /
+    //   4
 
-    ////     8
-    ////    / \
-    ////   3   10
-    ////  / \
-    //// 1   6
-    ////    /
-    ////   4
+    // Создание узлов и построение дерева
+    // указатели на узлы дерева 
+   /* TreeNode<int>* lnode, * rnode, * root;*/
+    TreeNode<int>* lnode = new TreeNode<int>(4);                    // создание левого узла без потомков
+    TreeNode<int>* rnode = new TreeNode<int>(6, lnode, nullptr);    // создание правого узла 6 с левым потомком
+    lnode = new TreeNode<int>(1);                                   // создание нового левого узла без потомков
+    TreeNode<int>* root = new TreeNode<int>(3,lnode,rnode);         // создание поддерева с потомками от 3
+    lnode = root;                                                   // после это поддерево становится левым потомком
+    rnode = new TreeNode<int>(10);
+    root = new TreeNode<int>(8, lnode, rnode);                      // основной корень этого дерева
 
-    //// Создание узлов и построение дерева
-    //// указатели на узлы дерева 
-    ///*TreeNode<int>* lnode, * rnode, * root;*/
-    //TreeNode<int>* lnode = new TreeNode<int>(4);                    // создание левого узла без потомков
-    //TreeNode<int>* rnode = new TreeNode<int>(6, lnode, nullptr);    // создание правого узла 6 с левым потомком
-    //lnode = new TreeNode<int>(1);                                   // создание нового левого узла без потомков
-    //TreeNode<int>* root = new TreeNode<int>(3,lnode,rnode);         // создание поддерева с потомками от 3
-    //lnode = root;                                                   // после это поддерево становится левым потомком
-    //rnode = new TreeNode<int>(10);
-    //root = new TreeNode<int>(8, lnode, rnode);                      // основной корень этого дерева
+    cout << "Дерево:\n";
+    cout << "       8\n";
+    cout << "     /   \\\n";
+    cout << "    3     10\n";
+    cout << "   / \\\n";
+    cout << "  1   6       \n";
+    cout << "     /         \n";
+    cout << "    4           \n";
 
-    //cout << "Дерево:\n";
-    //cout << "       8\n";
-    //cout << "     /   \\\n";
-    //cout << "    3     10\n";
-    //cout << "   / \\\n";
-    //cout << "  1   6       \n";
-    //cout << "     /         \n";
-    //cout << "    4           \n";
+    cout << "\nВывод дерева: " << endl;
+    BFS(root);
+    SearchNode(root,5);
+    InsertNode(root, 7);
+    BFS(root);
 
-    //cout << "\nВывод дерева: ";
-    //BFS(root);
+    cout << "\nНахождение следующего наибольшего для 7: ";
+    TreeNode<int>* s = nullptr;
+    s = Successor(root, 7);
+    if (s != nullptr) {
+        cout << s->Data();
+    }
+    else cout << "Не существует\n";
+    cout << " \n";
+    removeNode(root,7);
+   // removeNode(root, 3);
+    BFS(root);
+    inOrderSort(root);
 
-    //cout << "\nМинимальный узел: " << findMin(root)->Data() << endl;
-
-
-    //cout << "\nНахождение следующего наибольшего для 10: ";
-    //TreeNode<int>* s = nullptr;
-    //Successor(root, s, 10);
-    //if (s != nullptr) {
-    //    cout << s->Data();
-    //}
-    //else cout << "Не существует\n";
-
-
-    //// Удаление дерева
-    //root = deleteTree(root);
+    // Удаление дерева
+    root = deleteTree(root);
 
     return 0;
 }
