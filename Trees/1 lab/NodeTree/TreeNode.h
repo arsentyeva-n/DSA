@@ -440,7 +440,6 @@ void inOrderSort(TreeNode<T>* root) {
 // Удаление узла
 // O(n) — для несбалансированного дерева
 // O(log2n) — для сбалансированного дерева
-
 template <typename T>
 TreeNode<T>* removeNode(TreeNode<T>* root, const T key) {
 	// Базовый случай
@@ -466,7 +465,9 @@ TreeNode<T>* removeNode(TreeNode<T>* root, const T key) {
 			
 		}
 		// Узел не найден
-		if (current == nullptr) { return root; }
+		if (current == nullptr) { 
+			return root; }
+		// Дерево с одним узлом удаляется
 		if (parent == nullptr) {
 			delete root;
 			return nullptr;
@@ -516,9 +517,12 @@ TreeNode<T>* removeNode(TreeNode<T>* root, const T key) {
 			// Находим ближайшее наибольшее 
 			TreeNode<T>* succ = Successor(root, current->Data());
 			if (succ != nullptr) {
-				current->setData(succ->Data());
+				// Сохраняем ближайшего преемника
+				T temp = succ->Data();
 				// Удаляем ближайшее наибольшее
 				root = removeNode(root, succ->Data());
+				// Меняем на ближайшего преемника
+				current->setData(temp);
 			}
 		}
 	}

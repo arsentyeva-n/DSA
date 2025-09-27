@@ -29,6 +29,8 @@ class BinarySearchTree
 		// Деструктор
 		~BinarySearchTree() { deleteTree(this->root); };
 
+		TreeNode<T>*
+
 };
 
 

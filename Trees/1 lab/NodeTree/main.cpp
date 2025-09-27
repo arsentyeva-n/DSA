@@ -133,9 +133,9 @@ int main() {
     else cout << "Не существует\n";
     cout << " \n";
     removeNode(root,7);
-   // removeNode(root, 3);
+    removeNode(root, 3);
     BFS(root);
-    inOrderSort(root);
+    //inOrderSort(root);
 
     // Удаление дерева
     root = deleteTree(root);
