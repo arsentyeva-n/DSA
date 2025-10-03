@@ -100,7 +100,6 @@ int main() {
 
     // Создание узлов и построение дерева
     // указатели на узлы дерева 
-   /* TreeNode<int>* lnode, * rnode, * root;*/
     TreeNode<int>* lnode = new TreeNode<int>(4);                    // создание левого узла без потомков
     TreeNode<int>* rnode = new TreeNode<int>(6, lnode, nullptr);    // создание правого узла 6 с левым потомком
     lnode = new TreeNode<int>(1);                                   // создание нового левого узла без потомков
