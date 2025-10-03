@@ -13,19 +13,19 @@ class TreeNode
 {
 private:
 	// Тип данных
-	T data;					
+	T data;
 	// Указатели левого и правого узлов
-	TreeNode<T>* left;			
+	TreeNode<T>* left;
 	TreeNode<T>* right;
 
 public:
 	// Конструктор без параметров
-	TreeNode() = default;			
+	TreeNode() = default;
 
 	// C параметрами по умолчанию
 	// (передача идёт по ссылке const T&, то есть без копирования
 	// const гарантирует, что внутри конструктора аргумент нельзя изменить)
-	TreeNode(const T& data1, TreeNode<T>* left1 = nullptr, TreeNode<T>* right1 = nullptr); 
+	TreeNode(const T& data1, TreeNode<T>* left1 = nullptr, TreeNode<T>* right1 = nullptr);
 
 	//Методы доступа (геттеры)
 	T Data() const;
@@ -57,7 +57,7 @@ T TreeNode<T>::Data() const
 
 // Методы Left и Right возвращают значения полей левого и правого указателей
 template <typename T>
-TreeNode<T>* TreeNode<T>::Left() const 
+TreeNode<T>* TreeNode<T>::Left() const
 {
 	return this->left;
 }
@@ -96,12 +96,12 @@ void TreeNode<T>::setRight(TreeNode<T>* right1)
 template <typename T>
 TreeNode<T>* deleteTree(TreeNode<T>* root)
 {
-	if (root != nullptr) { 
-	
-	// Удаляем в порядке postorder
-	deleteTree(root->Left());	// левое поддерево
-	deleteTree(root->Right());	// правое поддерево	
-	delete root;				// удаляем корень
+	if (root != nullptr) {
+
+		// Удаляем в порядке postorder
+		deleteTree(root->Left());	// левое поддерево
+		deleteTree(root->Right());	// правое поддерево	
+		delete root;				// удаляем корень
 	}
 	return nullptr;
 }
@@ -210,7 +210,7 @@ void printVector(vector<T>& array) {
 // Поиск максимальной глубины  O(n) - посещаем каждый узел один раз
 template<typename T>
 int findDepth(TreeNode<T>* root)
-{	
+{
 	// Если дерево пустое
 	if (root == nullptr) {
 		return -1;
@@ -223,14 +223,14 @@ int findDepth(TreeNode<T>* root)
 	int rightDepth = findDepth(root->Right());
 
 	// Максимальное поддерево + сам корень
-	return max(leftDepth, rightDepth) + 1; 
+	return max(leftDepth, rightDepth) + 1;
 }
 
 
 // Подсчёт узлов  O(n) - посещаем каждый узел один раз
 template<typename T>
-size_t countNode(TreeNode<T>* node)   
-{ 
+size_t countNode(TreeNode<T>* node)
+{
 	// Базовый случай
 	if (node == nullptr) {
 		return 0;
@@ -241,7 +241,7 @@ size_t countNode(TreeNode<T>* node)
 	// Найти максимальную глубину правого поддерева
 	size_t right_count = countNode(node->Right());
 
-	return  left_count  + right_count + 1;
+	return  left_count + right_count + 1;
 }
 
 
@@ -261,7 +261,7 @@ void BFS(TreeNode<T>* root)							// todo зачем очередь?
 		while (!q.empty()) {
 			// количество элементов на данном уровне
 			size_t levelSize = q.size();
-			
+
 			for (int i = 0; i < levelSize; i++) {
 				// Извлекаем первый элемент из очереди и выводим его
 				TreeNode<T>* node = q.front();
@@ -358,7 +358,7 @@ TreeNode<T>* copyTree(TreeNode<T>* oldTree) {
 
 // Поиск узла по значению
 template <typename T>
- int SearchNode(TreeNode<T>* root, const T& key) {
+int SearchNode(TreeNode<T>* root, const T& key) {
 	// Проверка на пустое дерево
 	if (root == nullptr) {
 		cout << "Значение не найдено!" << endl;
@@ -415,7 +415,7 @@ TreeNode<T>* InsertNode(TreeNode<T>* root, const T& key) {
 template <typename T>
 TreeNode<T>* findMin(TreeNode<T>* root)
 {
-	if (root == nullptr) 
+	if (root == nullptr)
 		return nullptr;
 
 	while (root->Left() != nullptr) {
@@ -503,7 +503,7 @@ TreeNode<T>* removeNode(TreeNode<T>* root, const T value) {
 	else if (root->Data() < value) {						// Поиск в правом поддереве
 		root->setRight(removeNode(root->Right(), value));
 	}
-	
+
 	else { // Узел найден, root->Data() == value, 
 
 		// 1 случай. Нет дочерних узлов
@@ -513,7 +513,7 @@ TreeNode<T>* removeNode(TreeNode<T>* root, const T value) {
 		}
 
 		// 2 случай. Одни дочерний узел
-		
+
 		if (root->Left() == nullptr) {			// Нет левого узла
 			TreeNode<T>* temp = root->Right();	// Сохраняем указатель на правое поддерево
 			delete root;						// Освобождаем память

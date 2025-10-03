@@ -2,7 +2,7 @@
 
 
 #include <iostream>
-#include "TreeNode.h"
+#include "NodeTree.h"
 using namespace std;
 
 
@@ -28,7 +28,7 @@ int main() {
     n1->setRight(n3);
     n3->setLeft(n4);
     n3->setRight(n5);
-    
+
     cout << "Корень дерева: " << n1->Data() << endl;
     cout << "Левый потомок корня: " << n1->Left()->Data() << endl;
     cout << "Правый потомок корня: " << n1->Right()->Data() << endl;
@@ -40,7 +40,7 @@ int main() {
     cout << "         / \\\n";
     cout << "        4   5\n";
 
-   
+
     // Прямой, симметричный и обратный обходы
     /*printNLR(n1);
     cout << endl;
@@ -68,7 +68,7 @@ int main() {
     cout << "Кол-во узлов: " << countNode(n1) << endl;
 
 
-    cout << "\nКопирование дерева" ;
+    cout << "\nКопирование дерева";
     TreeNode<int>* newT;
     newT = copyTree(n1);
     //calcTree(newT);
@@ -85,7 +85,7 @@ int main() {
     // Проверка, что дерево удалено
     cout << "\nКоличество узлов: " << countNode(newT) << endl;
     cout << "Глубина дерева: " << findDepth(n1) << endl;
-    
+
 
 
     cout << "\nБинарное дерево поиска: " << endl;
@@ -104,7 +104,7 @@ int main() {
     TreeNode<int>* lnode = new TreeNode<int>(4);                    // создание левого узла без потомков
     TreeNode<int>* rnode = new TreeNode<int>(6, lnode, nullptr);    // создание правого узла 6 с левым потомком
     lnode = new TreeNode<int>(1);                                   // создание нового левого узла без потомков
-    TreeNode<int>* root = new TreeNode<int>(3,lnode,rnode);         // создание поддерева с потомками от 3
+    TreeNode<int>* root = new TreeNode<int>(3, lnode, rnode);         // создание поддерева с потомками от 3
     lnode = root;                                                   // после это поддерево становится левым потомком
     rnode = new TreeNode<int>(10);
     root = new TreeNode<int>(8, lnode, rnode);                      // основной корень этого дерева
@@ -120,7 +120,7 @@ int main() {
 
     cout << "\nВывод дерева: " << endl;
     BFS(root);
-    SearchNode(root,0);
+    SearchNode(root, 0);
     InsertNode(root, 5);
     BFS(root);
 

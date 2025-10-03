@@ -1,7 +1,7 @@
 //@author: Natalya Arsentyeva
 
 #include "pch.h"
-#include "../NodeTree/TreeNode.h"
+#include "../NodeTree/NodeTree.h"
 
 
 // Тестирование бинарного узла
@@ -422,7 +422,7 @@ TEST(TestTreeNode, TestСopyTree) {
     TreeNode<int>* copy1 = copyTree(root1);
 
     // Создание пустых векторов
-    vector<int> vec ;
+    vector<int> vec;
     vector<int> vec1;
 
     // Обычное дерево
@@ -502,27 +502,27 @@ TEST(TestTreeNode, TestSearchNode) {
 
     // Обычное
     TreeNode<int>* root1 = createTree1();
-    EXPECT_EQ(2, SearchNode(root1,12));
+    EXPECT_EQ(2, SearchNode(root1, 12));
 
     // Вырожденное вправо
     TreeNode<int>* root2 = createTree2();
-    EXPECT_EQ(3, SearchNode(root2,33));
+    EXPECT_EQ(3, SearchNode(root2, 33));
 
     // Вырожденное влево
     TreeNode<int>* root3 = createTree3();
-    EXPECT_EQ(4, SearchNode(root3,13));
+    EXPECT_EQ(4, SearchNode(root3, 13));
 
     // Завершённое дерево
     TreeNode<int>* root4 = createTree4();
-    EXPECT_EQ(-1, SearchNode(root4,0));
+    EXPECT_EQ(-1, SearchNode(root4, 0));
 
     // Пустое дерево
     TreeNode<int>* root5 = nullptr;
-    EXPECT_EQ(-1, SearchNode(root5,0));
+    EXPECT_EQ(-1, SearchNode(root5, 0));
 
     // Дерево с одним узлом
     TreeNode<int>* root6 = new TreeNode<int>(2);
-    EXPECT_EQ(0, SearchNode(root6,2));
+    EXPECT_EQ(0, SearchNode(root6, 2));
 
     deleteTree(root1);
     deleteTree(root2);
@@ -550,7 +550,7 @@ TEST(TestTreeNode, TestInsertNode) {
     vector<int> result, expected = { 5, 4, 22, 12, 10, 24, 42 };
 
     root1 = InsertNode(root1, 42);
-    
+
     createVectorNLR(root1, result);
     EXPECT_EQ(result, expected);
     result.clear();
@@ -638,40 +638,6 @@ TEST(TestTreeNode, TestInsertNode) {
     deleteTree(root6);
 }
 
-// Тест поиск первого большего
-TEST(TestTreeNode, TestSuccessor) {
-
-    // Обычное
-    TreeNode<int>* root1 = createTree1();
-    EXPECT_EQ(2, (Successor(root1, 4))->Data());
-
-    // Вырожденное вправо
-    TreeNode<int>* root2 = createTree2();
-    EXPECT_EQ(33, (Successor(root2, 30))->Data());
-
-    // Вырожденное влево
-    TreeNode<int>* root3 = createTree3();
-    EXPECT_EQ(21, (Successor(root3, 13))->Data());
-
-    // Завершённое дерево
-    TreeNode<int>* root4 = createTree4();
-    EXPECT_EQ(5, (Successor(root4, 4))->Data());
-
-    // Пустое дерево
-    TreeNode<int>* root5 = nullptr;
-    EXPECT_EQ(nullptr, (Successor(root5, 0))->Data());
-
-    // Дерево с одним узлом
-    TreeNode<int>* root6 = new TreeNode<int>(42);
-    EXPECT_EQ(42, (Successor(root6, 41))->Data());
-
-    deleteTree(root1);
-    deleteTree(root2);
-    deleteTree(root3);
-    deleteTree(root4);
-    deleteTree(root5);
-    deleteTree(root6);
-}
 
 // Тест удаление узла
 TEST(TestTreeNode, TestRemoveNode) {
@@ -704,7 +670,7 @@ TEST(TestTreeNode, TestRemoveNode) {
     //             33
     TreeNode<int>* root2 = createTree2();
     expected = { 10,19,33 };
-    root2 = removeNode(root2, 33);
+    root2 = removeNode(root2, 30);
 
     createVectorNLR(root2, result);
     EXPECT_EQ(result, expected);
@@ -739,7 +705,7 @@ TEST(TestTreeNode, TestRemoveNode) {
     // 1   3  5        
     TreeNode<int>* root4 = createTree4();
     expected = { 8, 5, 2, 1, 3, 7, 10, 9,  30 };
-    root4 = removeNode(root4, 11);
+    root4 = removeNode(root4, 4);
 
     createVectorNLR(root4, result);
     EXPECT_EQ(result, expected);
@@ -777,31 +743,37 @@ TEST(TestTreeNode, TestRemoveNode) {
 }
 
 // Тест поиск первого большего
-TEST(TestTreeNode, Test_Successor) {
+TEST(TestTreeNode, TestSuccessor) {
 
     // Обычное
     TreeNode<int>* root1 = createTree1();
-    EXPECT_EQ(2, (Successor(root1, 4))->Data());
+    TreeNode<int>* s = Successor(root1, 12);
+    EXPECT_EQ(22,s->Data());
 
     // Вырожденное вправо
     TreeNode<int>* root2 = createTree2();
-    EXPECT_EQ(33, (Successor(root2, 30))->Data());
+    s = Successor(root2, 30);
+    EXPECT_EQ(33, s->Data());
 
     // Вырожденное влево
     TreeNode<int>* root3 = createTree3();
-    EXPECT_EQ(21, (Successor(root3, 13))->Data());
+    s = Successor(root3, 13);
+    EXPECT_EQ(21, s->Data());
 
     // Завершённое дерево
     TreeNode<int>* root4 = createTree4();
-    EXPECT_EQ(5, (Successor(root4, 4))->Data());
+    s = Successor(root4, 3);
+    EXPECT_EQ(4, s->Data());
 
     // Пустое дерево
     TreeNode<int>* root5 = nullptr;
-    EXPECT_EQ(nullptr, (Successor(root5, 0))->Data());
+    s = Successor(root5, 0);
+    EXPECT_EQ(nullptr, s);
 
     // Дерево с одним узлом
     TreeNode<int>* root6 = new TreeNode<int>(42);
-    EXPECT_EQ(42, (Successor(root6, 41))->Data());
+    s = Successor(root6, 41);
+    EXPECT_EQ(42, s->Data());
 
     deleteTree(root1);
     deleteTree(root2);
@@ -812,4 +784,4 @@ TEST(TestTreeNode, Test_Successor) {
 }
 
 
-// inorder, removeNode,
+// inorder
