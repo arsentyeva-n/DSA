@@ -11,9 +11,8 @@ template <typename T>
 class BinarySearchTree
 {
 private:
-	// Указатели на корень и на текущий узел
+	// Указатель на корень
 	TreeNode<T>* root;
-	TreeNode<T>* current;
 
 	// Число элементов дерева 
 	size_t size;
@@ -23,11 +22,11 @@ public:
 	// Конструктор по умолчанию
 	BinarySearchTree();
 
-	// Конструктор с параметром
-	BinarySearchTree(TreeNode<T>* tree);
+	//// Конструктор с параметром
+	//BinarySearchTree(TreeNode<T>* tree);
 
 	// Деструктор
-	~BinarySearchTree() { deleteTree(this->root); };
+	~BinarySearchTree() { deleteTree(root); };
 
 	size_t Size() const;
 	void Insert(const T& item);
@@ -35,38 +34,35 @@ public:
 	TreeNode<T>* get_root() const;
 	void Clear();
 	bool Empty() const;
-	//size_t Height();
 };
 
 // Конструктор по умолчанию
 template <typename T>
 BinarySearchTree<T>::BinarySearchTree()
 {
-	this->root = nullptr;
-	this->current = nullptr;
-	this->size = 0;
+	root = nullptr;
+	size = 0;
 }
 
 // Конструктор с параметрами
-template <typename T>
-BinarySearchTree<T>::BinarySearchTree(TreeNode<T>* tree)
-{
-	this->root = сopyTree(tree);
-	this->current = nullptr;
-	this->size = countNode(this->root);
-}
+//template <typename T>
+//BinarySearchTree<T>::BinarySearchTree(TreeNode<T>* tree)
+//{
+//	root = сopyTree(tree);
+//	size = countNode(this->root);
+//}
 
 // Вставка узла
 template<class T>
 void BinarySearchTree<T>::Insert(const T& item) {
-	this->root = InsertNode(this->root, item);
+	root = InsertNode(root, item);
 	size++;
 }
 
 // Удаление узла
 template<class T>
 void BinarySearchTree<T>::Remove(const T& item) {
-	this->root = removeNode(this->root, item);
+	root = removeNode(root, item);
 	size--;
 }
 
@@ -74,105 +70,28 @@ void BinarySearchTree<T>::Remove(const T& item) {
 template <typename T>
 void BinarySearchTree<T>::Clear() {
 	deleteTree(this->root);
-	this->root = nullptr;
-	this->current = nullptr;
-	this->size = 0;
+	root = nullptr;
+	size = 0;
 }
 
 // Возвращает указатель на корень
 template <typename T>
 TreeNode<T>* BinarySearchTree<T>::get_root() const
 {
-	return this->root;
+	return root;
 }
 
 // Проверка, пустое ли дерево
 template<class T>
 bool BinarySearchTree<T>::Empty() const {
-	return (this->root == nullptr);
+	return (root == nullptr);
 }
 
 // Количество узлов в дереве
 template<class T>
 size_t BinarySearchTree<T>::Size() const {
-	return this->size;
+	return size;
 }
 
 
 
-
-//	// конструктор копирования
-//	BinSTree(const BinSTree<T>& tree);
-//
-//	// оператор копирования (присваивания)
-//	BinSTree<T>& operator= (const BinSTree<T>& rhs);
-//
-//	// деструктор
-//	~BinSTree() { deleteTree(this->root); }
-//
-//
-//	// стандартные методы обработки списков
-//
-//	// возвращает уровень, на котором находится искомый узел
-//	// либо -1, если узла с таким значением в дереве нет
-//	int Find(const T& item) const;
-//	void Insert(const T& item);
-//	void Delete(const T& item);
-//	void ClearList();
-//
-//	// проверка, пустое ли дерево
-//	bool ListEmpty() const;
-//
-//	// количество узлов в дереве
-//	int ListSize() const;
-//
-//	TreeNode<T>* GetRoot() const;
-//};
-//
-
-//// конструктор копирования
-//template <typename T>
-//BinSTree<T>::BinSTree(const BinSTree<T>& tree)
-//{
-//	this->root = CopyTree(tree.root);
-//
-//	// присвоить текущему указателю значение корня и задать размер дерева
-//	this->current = this->root;
-//	this->size = tree.size;
-//}
-//
-//
-//// оператор копирования (присваивания)
-//template <class T>
-//BinSTree<T>& BinSTree<T>::operator= (const BinSTree<T>& rhs)
-//{
-//	// нельзя копировать дерево в само себя
-//	if (this == &rhs)
-//		return *this;
-//
-//	// очистить текущее дерево
-//	ClearList();
-//
-//	// скопировать новое дерево в текущий объект
-//	this->root = CopyTree(rhs.root);
-//
-//	// присвоить текущему указателю значение корня и задать размер дерева
-//	this->current = this->root;
-//	this->size = rhs.size;
-//
-//	// возвратить ссылку на текущий объект
-//	return *this;
-//}
-//
-
-
-//// поиск узла
-//// возвращает уровень, на котором был найден узел
-//// либо -1, если узла с искомым значением нет
-//template<class T>
-//int BinSTree<T>::Find(const T& item) const {
-//	return SearchNode(this->root, item);
-//}
-
-
-//
