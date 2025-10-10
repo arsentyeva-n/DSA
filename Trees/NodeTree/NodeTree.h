@@ -319,11 +319,12 @@ void BFS(TreeNode<T>* root)							// todo зачем очередь?
 template <typename T>
 TreeNode<T>* copyTree(TreeNode<T>* oldTree) {
 
-	// ќбъ€вл€ем указатели дл€ новых узлов
-	TreeNode<T>* newleft, * newright, * newroot;
 
 	// Ѕазовый случай рекурсии: если исходное дерево пустое
 	if (oldTree == nullptr) return nullptr;
+
+	// ќбъ€вл€ем указатели дл€ новых узлов
+	TreeNode<T>* newleft, * newright, * newroot;
 
 	// –екурсивное копирование Ћ≈¬ќ√ќ поддерева, если в исходном дереве есть левый потомок
 	if (oldTree->Left() != nullptr)

@@ -22,8 +22,11 @@ public:
 	// Конструктор по умолчанию
 	BinarySearchTree();
 
-	//// Конструктор с параметром
-	//BinarySearchTree(TreeNode<T>* tree);
+	// Конструктор с параметром
+	BinarySearchTree(TreeNode<T>* tree);
+
+	// Конструктор копирования
+	BinarySearchTree (const BinarySearchTree<T>& tree);
 
 	// Деструктор
 	~BinarySearchTree() { deleteTree(root); };
@@ -34,6 +37,9 @@ public:
 	TreeNode<T>* get_root() const;
 	void Clear();
 	bool Empty() const;
+
+	// Оператор присваивания копированием
+	BinarySearchTree<T>& operator=( const BinarySearchTree<T>& tree);
 };
 
 // Конструктор по умолчанию
@@ -45,22 +51,52 @@ BinarySearchTree<T>::BinarySearchTree()
 }
 
 // Конструктор с параметрами
-//template <typename T>
-//BinarySearchTree<T>::BinarySearchTree(TreeNode<T>* tree)
-//{
-//	root = сopyTree(tree);
-//	size = countNode(this->root);
-//}
+template <typename T>
+BinarySearchTree<T>::BinarySearchTree(TreeNode<T>* tree)
+{
+	root = copyTree(tree);
+	size = countNode(root);
+}
+
+// Конструктор копирования
+template <typename T>
+BinarySearchTree<T>::BinarySearchTree(const BinarySearchTree<T>& tree) 
+{
+	if (tree.root != nullptr) {
+		root = copyTree(tree.root);
+		size = tree.size;
+	}
+}
+
+
+// Конструктор присваивания и копирования
+template <typename T>
+BinarySearchTree<T>& BinarySearchTree<T>::operator= (const BinarySearchTree<T>& tree)
+{
+	// Нельзя копировать в само себя
+	if (this == &tree) return *this;
+	
+	// Очистить текущее дерево
+	Clear();
+
+	// Копирование нового дерева
+	this->root = copyTree(tree.root);
+	this->size = tree.size;
+	
+	
+	// Возвратить ссылку на текущий объект
+	return *this;
+}
 
 // Вставка узла
-template<class T>
+template <typename T>
 void BinarySearchTree<T>::Insert(const T& item) {
 	root = InsertNode(root, item);
 	size++;
 }
 
 // Удаление узла
-template<class T>
+template <typename T>
 void BinarySearchTree<T>::Remove(const T& item) {
 	root = removeNode(root, item);
 	size--;
@@ -82,13 +118,13 @@ TreeNode<T>* BinarySearchTree<T>::get_root() const
 }
 
 // Проверка, пустое ли дерево
-template<class T>
+template <typename T>
 bool BinarySearchTree<T>::Empty() const {
 	return (root == nullptr);
 }
 
 // Количество узлов в дереве
-template<class T>
+template <typename T>
 size_t BinarySearchTree<T>::Size() const {
 	return size;
 }
