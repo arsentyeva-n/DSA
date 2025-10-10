@@ -37,6 +37,7 @@ public:
 	TreeNode<T>* get_root() const;
 	void Clear();
 	bool Empty() const;
+	//find
 
 	// Оператор присваивания копированием
 	BinarySearchTree<T>& operator=( const BinarySearchTree<T>& tree);
