@@ -123,6 +123,10 @@ int main() {
     InsertNode(root, 5);
     BFS(root);
 
+    cout << "\nDFS: \n";
+    DFS(root);
+    cout << endl;
+   
     cout << "\nНахождение следующего наибольшего для 5: ";
     TreeNode<int>* s = nullptr;
     s = Successor(root, 5);

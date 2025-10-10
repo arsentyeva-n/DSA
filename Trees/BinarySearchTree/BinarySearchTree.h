@@ -62,6 +62,7 @@ BinarySearchTree<T>::BinarySearchTree(TreeNode<T>* tree)
 template <typename T>
 BinarySearchTree<T>::BinarySearchTree(const BinarySearchTree<T>& tree) 
 {
+	// Если параметр  не пустой
 	if (tree.root != nullptr) {
 		root = copyTree(tree.root);
 		size = tree.size;

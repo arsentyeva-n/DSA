@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <stack>
 using namespace std;
 
 // Шаблонный класс узла бинарного дерева
@@ -179,7 +180,7 @@ void printVector(vector<T>& array) {
 	cout << endl;
 }
 
-// Функция возведения в квадрат каждого узла дерева
+//// Функция возведения в квадрат каждого узла дерева
 //template<typename T>
 //void squareTree(TreeNode<T>* root) {
 //	// Если дерево не пустое
@@ -192,7 +193,7 @@ void printVector(vector<T>& array) {
 //		squareTree(root->Right());		
 //	}
 //}
-//
+
 //// Функция умножения на 3
 //template<typename T>
 //void calcTree(TreeNode<T>* root) {
@@ -205,6 +206,11 @@ void printVector(vector<T>& array) {
 //		// Обработка правого поддерева
 //		calcTree(root->Right());
 //	}
+//}
+
+//template<typename T>
+//void apply(TreeNode<T>* root, function<void(T)> squareTree) {
+//
 //}
 
 // Поиск максимальной глубины  O(n) - посещаем каждый узел один раз
@@ -252,7 +258,7 @@ void BFS(TreeNode<T>* root)							// todo зачем очередь?
 	cout << endl;
 	// Если дерево не пустое
 	if (root != nullptr) {
-		// создаем очередь
+		// Создаем очередь
 		queue <TreeNode<T>*> q;
 		// Сохраняем корень в очередь
 		q.push(root);
@@ -280,38 +286,31 @@ void BFS(TreeNode<T>* root)							// todo зачем очередь?
 }
 
 // Печать, используя обход в глубину СТЭКОМ
-//template <typename T>
-//void BFS(TreeNode<T>* root)							
-//{
-//	cout << endl;
-//	// Если дерево не пустое
-//	if (root != nullptr) {
-//		// создаем очередь
-//		queue <TreeNode<T>*> q;
-//		// Сохраняем корень в очередь
-//		q.push(root);
-//
-//		// Пока очередь не пустая
-//		while (!q.empty()) {
-//			// количество элементов на данном уровне
-//			size_t levelSize = q.size();
-//
-//			for (int i = 0; i < levelSize; i++) {
-//				// Извлекаем первый элемент из очереди и выводим его
-//				TreeNode<T>* node = q.front();
-//				cout << node->Data() << " ";
-//				q.pop(); // Удаляем текущий узел и переходим к следующим
-//
-//				// Добавляем в очередь левого и правого потомка (если существуют)
-//				if (node->Left() != nullptr)
-//					q.push(node->Left());
-//				if (node->Right() != nullptr)
-//					q.push(node->Right());
-//			}
-//			cout << endl;
-//		}
-//	}
-//}
+template <typename T>
+void DFS(TreeNode<T>* root)							
+{
+	// Если дерево не пустое
+	if (root != nullptr) {
+		// Создаем стэк
+		stack <TreeNode<T>*> s;
+		// Сохраняем корень в стэк
+		s.push(root);
+
+		// Пока стэк не пустой
+		while (!s.empty()) {
+				// Извлекаем первый элемент и выводим его
+				TreeNode<T>* node = s.top();
+				cout << node->Data() << " ";
+				s.pop(); // Удаляем текущий узел и переходим к следующим
+
+				// Добавляем в очередь правого и левого потомка (если существуют)
+				if (node->Right() != nullptr)
+					s.push(node->Right());
+				if (node->Left() != nullptr)
+					s.push(node->Left());
+		}
+	}
+}
 
 
 // Глубокое копирование дерева обратным обходом рекурсивно
