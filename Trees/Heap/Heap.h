@@ -13,20 +13,22 @@ template <typename T>
 class Heap
 {
 private:
-
 	vector<T> lst;
-    size_t  maxheapsize; // макс или текущий размер
-    size_t heapSize; // определяет конец списка
+    int maxheapsize; // макс или текущий размер
+    int heapSize; // определяет конец списка
 
-    void bubbleUp(size_t i);
-    void trickleDown(size_t i);
+    void bubbleUp(int i);
+    void trickleDown(int i);
 
 public:
 	Heap();
-    
-	size_t get_heapSize() const;
-    // максимальный и текущий размеры пирамиды
-    void add(const T& value);
+    //~Heap();
+	size_t get_heapSize() const; // максимальный и текущий размеры пирамиды
+   
+    void insert(const T& value);
+    void remove(const T& value);
+    void removeMax();
+    void printList();
     // delete
     // emty
     //clear
@@ -39,8 +41,8 @@ public:
 template <typename T>
 Heap<T>::Heap() 
 {
-    heapSize = lst.size();
-
+    heapSize = 0;
+    maxheapsize = lst.size();
 }
 
 
@@ -52,68 +54,54 @@ size_t Heap<T>::get_heapSize() const
 
 // просеивание вверх
 template <typename T>
-void bubbleUp(size_t i) 
+void Heap<T>::bubbleUp(int i)
 {
-
-}
-// просеивание вниз
-template <typename T>
-void trickleDown(size_t i) 
-{
-    //while 2 * i + 1 < lst.heapSize     // heapSize — количество элементов в куче
-    //    left = 2 * i + 1             // left — левый сын
-    //    right = 2 * i + 2            // right — правый сын
-    //    j = left
-    //    if right < a.heapSize and a[right] < a[left]
-    //        j = right
-    //        if a[i] <= a[j]
-    //            break
-    //            swap(a[i], a[j])
-    //            i = j
-
-    //            int size = data.size();
-
-    //while (index < size) {
-    //    int leftChild = 2 * index + 1;   // Левый потомок
-    //    int rightChild = 2 * index + 2;  // Правый потомок
-    //    int smallest = index;            // Индекс наименьшего элемента
-
-    //    // Сравниваем с левым потомком
-    //    if (leftChild < size && data[leftChild] < data[smallest]) {
-    //        smallest = leftChild;
-    //    }
-
-    //    // Сравниваем с правым потомком
-    //    if (rightChild < size && data[rightChild] < data[smallest]) {
-    //        smallest = rightChild;
-    //    }
-
-    //    // Если найден потомок меньше текущего элемента - меняем местами
-    //    if (smallest != index) {
-    //        swap(data[index], data[smallest]);
-    //        index = smallest;  // Продолжаем с новым положением
-    //    }
-    //    else {
-    //        break;  // Свойство кучи восстановлено
-    //    }
-    //}
-}
-
-template <typename T>
-void Heap<T>::add(const T& value)
-{
-    list.add(value);
-    int i = heapSize - 1;
-    int parent = (i - 1) / 2;
-
-    while (i > 0 && list[parent] < list[i])
-    {
-        int temp = list[i];
-        list[i] = list[parent];
-        list[parent] = temp;
-
-        i = parent;
-        parent = (i - 1) / 2;
+    // Пока вставляемый элемент больше корня
+    while (lst[i] > lst[(i - 1) / 2]) {     // max-heap 
+        // меняем их местами
+        swap(lst[i], lst[(i - 1) / 2]);
+        // переходим в корень
+        i = (i - 1) / 2;
     }
 }
 
+// просеивание вниз
+template <typename T>
+void Heap<T>::trickleDown(int i)
+{
+    
+
+}
+
+template <typename T>
+void Heap<T>::insert(const T& value)
+{
+    heapSize = heapSize + 1;
+    lst.push_back(value);
+    bubbleUp(heapSize-1);
+}
+
+template <typename T>
+void Heap<T>::remove(const T& value)
+{
+ /*   heapSize = heapSize - 1;
+    lst.push_back(value);
+    trickleDown(heapSize-1);*/
+}
+
+template <typename T>
+void Heap<T>::removeMax()
+{
+    /*   heapSize = heapSize - 1;
+       lst.push_back(value);
+       trickleDown(heapSize-1);*/
+}
+
+// Вывод массива данных
+template<typename T>
+void Heap<T>::printList() {
+    for (const auto& element : this->lst) {
+        cout << element << " ";
+    }
+    cout << endl;
+}
