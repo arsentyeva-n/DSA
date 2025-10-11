@@ -7,72 +7,93 @@
 using namespace std;
 
 
-///  Двоичная куча max-heap
+///  Двоичная куча (max-heap)
 
 template <typename T>
 class Heap
 {
 private:
-	vector<T> lst;
-    int maxheapsize; // макс или текущий размер
-    int heapSize; // определяет конец списка
+	vector<T> lst;         // Создаем динамический массив с помощью вектора
+    size_t maxheapsize;    // макс или текущий размер ?? todo:
+    size_t heapSize;       // Размер массива
 
-    void bubbleUp(int i);
-    void trickleDown(int i);
+    void bubbleUp(int i);       // Функция просеивания вверх
+    void trickleDown(int i);    // Функция просеивания вниз
 
 public:
+    // Конструктор по умолчанию
 	Heap();
+
+    // Деструктор
     //~Heap();
-	size_t get_heapSize() const; // максимальный и текущий размеры пирамиды
+
+    // Возвращает размер кучи
+    size_t Size() const;
    
-    void insert(const T& value);
-    void remove(const T& value);
-    void removeMax();
-    void printList();
-    // delete
+    
+    void insert(const T& value);         // Вставка
+    void printList();                    // Вывод массива данных
+    T extractMax();                      // Удаление корня (максимального элемента в куче) и его извлечение
     // emty
-    //clear
+    // clear
     //
 
     
 
 };
 
+// Конструктор по умолчанию
 template <typename T>
 Heap<T>::Heap() 
 {
-    heapSize = 0;
+    heapSize = lst.size();
     maxheapsize = lst.size();
 }
 
 
+// Размер кучи
 template <typename T>
-size_t Heap<T>::get_heapSize() const
+size_t Heap<T>::Size() const
 {
     return heapSize;
 }
 
-// просеивание вверх
+// Просеивание вверх
 template <typename T>
 void Heap<T>::bubbleUp(int i)
 {
-    // Пока вставляемый элемент больше корня
+    // Пока вставляемый элемент (сын) больше корня (родителя)
     while (lst[i] > lst[(i - 1) / 2]) {     // max-heap 
-        // меняем их местами
+        // Меняем их местами, если сын больше
         swap(lst[i], lst[(i - 1) / 2]);
-        // переходим в корень
+        // Переходим к родителю и просеиваем его
         i = (i - 1) / 2;
     }
 }
 
-// просеивание вниз
+// Просеивание вниз
 template <typename T>
 void Heap<T>::trickleDown(int i)
 {
-    
 
+    int left, right, j;
+    while (2 * i + 1 > heapSize){    // heapSize — количество элементов в куче
+        left = 2 * i + 1;            // left — левый сын
+        right = 2 * i + 2;           // right — правый сын
+        j = left;
+
+        if (right < heapSize && lst[right] < lst[left])
+            j = right;
+
+        if (lst[i] <= lst[j])
+            break;
+
+        swap(lst[i], lst[j]);
+        i = j;
+    } 
 }
 
+// Функция вставки в кучу
 template <typename T>
 void Heap<T>::insert(const T& value)
 {
@@ -81,21 +102,17 @@ void Heap<T>::insert(const T& value)
     bubbleUp(heapSize-1);
 }
 
+// Удаление корня (максимального элемента в куче) и его извлечение TODO
 template <typename T>
-void Heap<T>::remove(const T& value)
+T Heap<T>::extractMax()
 {
- /*   heapSize = heapSize - 1;
-    lst.push_back(value);
-    trickleDown(heapSize-1);*/
+    T min = lst[0];
+    lst[0] = lst[heapSize - 1];
+    heapSize = heapSize - 1;
+    trickleDown(0);
+    return min;
 }
 
-template <typename T>
-void Heap<T>::removeMax()
-{
-    /*   heapSize = heapSize - 1;
-       lst.push_back(value);
-       trickleDown(heapSize-1);*/
-}
 
 // Вывод массива данных
 template<typename T>

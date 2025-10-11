@@ -11,7 +11,9 @@ int main()
 	h.insert(10);
 	h.insert(5);
 	h.insert(12);
-	
+	h.printList();
+
+	cout << "\n" << h.extractMax() << endl;
 	h.printList();
 	
 }
