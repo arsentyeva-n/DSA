@@ -117,6 +117,7 @@ T Heap<T>::extractMax()
 }
 
 
+// Просеивание вниз,  О(log n) в худшем, О(1) в лучшем
 template <typename T>
 void Heap<T>::trickleDown(int i)
 {
@@ -169,7 +170,7 @@ void Heap<T>::printList() {
     cout << endl;
 }
 
-// Поиск элемента в куче и вывод его индекса
+// Поиск элемента в куче и вывод его индекса, О(n)
 template<typename T>
 int Heap<T>::search(const T& value) const
 {
@@ -183,7 +184,7 @@ int Heap<T>::search(const T& value) const
     return -1;
 }
 
-// Создание кучи на основе бинарного дерева
+// Создание кучи на основе бинарного дерева, O(n log n)
 template <typename T>
 Heap<T> buildHeapBinTree(TreeNode<T>* root)
 {
@@ -217,7 +218,7 @@ Heap<T> buildHeapBinTree(TreeNode<T>* root)
     return heap;
 }
 
-// Создание вектора на основе бинарного дерева
+// Создание вектора на основе бинарного дерева, O(n)
 template <typename T>
 vector<T> buildHeapArr(TreeNode<T>* root)
 {
@@ -251,14 +252,14 @@ vector<T> buildHeapArr(TreeNode<T>* root)
 }
 
 
-// Сортировка кучей
+// Сортировка кучей, сложность во всех случаях O(n log n) 
 template <typename T>
 void sort(vector<T>& elements)
 {
     // Создаем кучу из вектора
     // в конструкторе вектор просеивается вниз, чтобы соответствовать свойству кучи,
     // т. е. формируется первоначальное сортирующее дерево
-    Heap<T> heap(elements);
+    Heap<T> heap(elements); 
 
     // Переменная с размером вектора
     int n = elements.size();
@@ -276,3 +277,4 @@ void sort(vector<T>& elements)
     //    elements[i] = heap.extractMax();
     //}
 }
+//O(n) + O(n log n) = O(n log n)
