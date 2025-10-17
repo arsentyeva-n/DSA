@@ -22,6 +22,8 @@ private:
 public:
     // Конструктор по умолчанию
 	Heap();
+    // Конструктор с парамектром (вектором)
+    Heap(vector<T> elements);
 
     // Деструктор
     ~Heap() { lst.clear(); };
@@ -34,8 +36,8 @@ public:
     void printList();                    // Вывод массива данных
     T extractMax();                      // Удаление корня (максимального элемента в куче) и его извлечение
     bool empty() const;                  // Проверка на пустоту
-    void clear();
-
+    void clear();                        // Очистка кучи
+    int search(const T& value) const;    // Поиск элемента в куче
     
 
 };
@@ -47,6 +49,17 @@ Heap<T>::Heap()
     heapSize = lst.size();
 }
 
+// Конструктор с параметром
+template <typename T>
+Heap<T>::Heap(vector<T> elements)
+{
+    lst = elements;
+    heapSize = lst.size();
+    // Просеиваем потомков
+    for (int i = heapSize / 2 - 1; i >= 0; i--) {
+        trickleDown(i);
+    }
+}
 
 // Размер кучи
 template <typename T>
@@ -88,56 +101,49 @@ template <typename T>
 T Heap<T>::extractMax()
 {
     // Запоминаем max
-    T min = lst[0];
+    T max = lst[0];
     
     // На его место ставим самый правый лист дерева (последний элемент)
     lst[0] = lst[heapSize - 1];
-    // Уменьшаем размер массива
-    heapSize = heapSize - 1;
+   
     // Восстанавливаем свойство кучи просеиванием вниз
     trickleDown(0);
     // Удаляем лишний элемент в массиве
     lst.pop_back();
-
+    // Уменьшаем размер массива
+    heapSize = heapSize - 1;
     //Возвращаем максимум
-    return min;
+    return max;
 }
 
 
-// Просеивание вниз, О(log n) в худшем, в лучшем О(1)
 template <typename T>
 void Heap<T>::trickleDown(int i)
 {
-    // Инициалищируем дополнительные переменные
+   
+    // Инициализируем дополнительные переменные
     int left, right, j;
-
     //cout << lst[i];
-    // Сравниваем корень с потомками, пока не кончится дерево
-    while (2 * i + 1 < heapSize) {    // heapSize — количество элементов в куче
-        left = 2 * i + 1;             // left — левый сын
-        right = 2 * i + 2;            // right — правый сын
-        
-        // Если правый сын больше
-        if (lst[i] < lst[right])
-            // Запоминаем его индекс
+    while (2 * i + 1 < heapSize) {    // Пока есть хотя бы левый потомок
+        left = 2 * i + 1;
+        right = 2 * i + 2;
+        j = left;  // По умолчанию считаем левого потомка наибольшим
+
+        // Если есть правый потомок и он больше левого
+        if (right < heapSize && lst[right] > lst[left]) {
             j = right;
+        }
 
-        // Если левый сын больше
-        else if (lst[i] < lst[left])
-            // Запоминаем его индекс
-            j = left;
-        
-        // Если текущий элемент больше или равен, то цикл заканчивается
-        if (lst[i] >= lst[j])
+        // Если текущий элемент уже больше наибольшего потомка - выходим
+        if (lst[i] >= lst[j]) {
             break;
+        }
 
-        // Иначе меняем местами корень и потомка
+        // Меняем местами с наибольшим потомком
         swap(lst[i], lst[j]);
-        // Дальше просеиваем корень с его потомками
-        i = j;
+        i = j;  // Переходим к потомку
     }
 }
-
 
 // Проверка на пустоту
 template<typename T>
@@ -163,6 +169,19 @@ void Heap<T>::printList() {
     cout << endl;
 }
 
+// Поиск элемента в куче и вывод его индекса
+template<typename T>
+int Heap<T>::search(const T& value) const
+{
+    for (int i = 0; i < heapSize; i++)
+    {
+        if (lst[i] == value) {
+            return i;
+            break;
+        }
+    }
+    return -1;
+}
 
 // Создание кучи на основе бинарного дерева
 template <typename T>
@@ -172,8 +191,6 @@ Heap<T> buildHeapBinTree(TreeNode<T>* root)
     // Если дерево не пустое
     if (root != nullptr) 
     {
-        
-
         // Создаем очередь
         queue <TreeNode<T>*> q;
 
@@ -198,4 +215,37 @@ Heap<T> buildHeapBinTree(TreeNode<T>* root)
         }
     }
     return heap;
+}
+
+// Создание вектора на основе бинарного дерева
+template <typename T>
+vector<T> buildHeapArr(TreeNode<T>* root)
+{
+    vector<T> elements;
+    // Если дерево не пустое
+    if (root != nullptr)
+    {
+        
+        queue<T> q;
+        // Сохраняем корень в очередь
+        q.push(root);
+
+        // Пока очередь не пустая
+        while (!q.empty())
+        {
+            // Извлекаем первый элемент из очереди и добавляем в кучу
+            TreeNode<T>* node = q.front();
+            elements.insert(node->Data());
+
+            // Удаляем текущий узел и переходим к следующим
+            q.pop();
+
+            // Добавляем в очередь левого и правого потомка (если существуют)
+            if (node->Left() != nullptr)
+                q.push(node->Left());
+            if (node->Right() != nullptr)
+                q.push(node->Right());
+        }
+    }
+    return elements;
 }

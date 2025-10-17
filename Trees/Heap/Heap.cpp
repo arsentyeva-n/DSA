@@ -167,5 +167,20 @@ int main()
     h2.insert(100);
     cout << "\nsize: " << h2.Size() << endl;
     h2.printList();
+
+    vector<int> vec = { 10, 30, 5, 20, 25, 15 };
+    Heap<int> h3({ 10, 30, 5, 20, 25, 15 });
+   // Heap<int> h3(vec); 
+    cout << "\nsize: " << h3.Size() << endl;
+
+    h3.printList();
+    cout << "\n" << h3.search(5) << endl;
+
+    // Извлекаем максимум и удаляем его
+    cout << "\n" << h3.extractMax() << endl;
+    cout << "\nsize: " << h3.Size() << endl;
+    h3.printList();
+
+    cout << "\n" << h3.search(30) << endl;
 }
 
