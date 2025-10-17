@@ -182,5 +182,9 @@ int main()
     h3.printList();
 
     cout << "\n" << h3.search(30) << endl;
+
+    vector<int> vec1 = { 10, 30, 5, 20, 25, 15 };
+    sort(vec1);
+    printVector(vec1);
 }
 

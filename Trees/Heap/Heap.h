@@ -249,3 +249,30 @@ vector<T> buildHeapArr(TreeNode<T>* root)
     }
     return elements;
 }
+
+
+// Сортировка кучей
+template <typename T>
+void sort(vector<T>& elements)
+{
+    // Создаем кучу из вектора
+    // в конструкторе вектор просеивается вниз, чтобы соответствовать свойству кучи,
+    // т. е. формируется первоначальное сортирующее дерево
+    Heap<T> heap(elements);
+
+    // Переменная с размером вектора
+    int n = elements.size();
+
+    // Сортируем по возрастанию
+    for (int i = n - 1; i >= 0; i--)
+    {
+        // Сохраняем максимум дерева в конец массива и удаляем его из кучи (предусмотренно в функции)
+        elements[i] = heap.extractMax();
+    }
+
+    // Сортируем по убыванию
+    //for (int i = 0; i < n; i++)
+    //{
+    //    elements[i] = heap.extractMax();
+    //}
+}
