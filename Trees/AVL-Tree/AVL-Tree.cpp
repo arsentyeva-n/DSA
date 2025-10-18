@@ -1,8 +1,10 @@
-﻿
+﻿//@author: Natalya Arsentyeva
 
+
+#pragma once
 #include <iostream>
-#include "Heap.h"
-using namespace std;
+#include "AVLTree.h"
+
 
 TreeNode<int>* createTree1() {
 
@@ -128,63 +130,9 @@ TreeNode<int>* createTree4() {
     return root;
 }
 
-
 int main()
 {
-	setlocale(LC_ALL, "RUS");
-
-    // Создаем max-heap
-	Heap<int> h;
-	h.insert(20);
-	h.insert(10);
-	h.insert(5);
-	h.insert(15);
-	h.insert(30);
-	h.insert(25);
-	h.insert(100);
-	cout << "\nsize: " << h.Size() << endl;
-	h.printList();
-
-    // Извлекаем максимум и удаляем его
-	cout << "\n" << h.extractMax() << endl;
-	cout << "\nsize: " << h.Size() << endl;
-	h.printList();
-    
-    // Проверка путсоты дерева
-	h.clear();
-	if (h.empty() == true) cout << "\nКуча пустая\n";
-
-    // Создание кучи на основе бинарного дерева
-    TreeNode<int>* root = createTree3();
-    Heap<int> h2 = buildHeapBinTree(root);
-    cout << "\nsize: " << h2.Size() << endl;
-    h2.printList();
-
-    // Удаляем бинарное дерево
-    deleteTree(root);
-
-    // Вставка в кучу на основе бинарного дерева
-    h2.insert(100);
-    cout << "\nsize: " << h2.Size() << endl;
-    h2.printList();
-
-    vector<int> vec = { 10, 30, 5, 20, 25, 15 };
-    Heap<int> h3({ 10, 30, 5, 20, 25, 15 });
-   // Heap<int> h3(vec); 
-    cout << "\nsize: " << h3.Size() << endl;
-
-    h3.printList();
-    cout << "\n" << h3.search(30) << endl;
-
-    // Извлекаем максимум и удаляем его
-    cout << "\n" << h3.extractMax() << endl;
-    cout << "\nsize: " << h3.Size() << endl;
-    h3.printList();
-
-    cout << "\n" << h3.search(30) << endl;
-
-    vector<int> vec1 = { 10, 30, 5, 20, 25, 15 };
-    sort(vec1);
-    printVector(vec1);
+    //TreeNode<int>* t1 = createTree4();
+    //cout << "\nH:" << FindHeight(t1) << endl;
+    //deleteTree(t1);
 }
-

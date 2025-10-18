@@ -41,6 +41,8 @@ public:
 
 	// ќператор присваивани€ копированием
 	BinarySearchTree<T>& operator=( const BinarySearchTree<T>& tree);
+
+	// 2 конструктора, правило п€ти
 };
 
 //  онструктор по умолчанию

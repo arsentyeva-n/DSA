@@ -1,6 +1,9 @@
 //@author: Natalya Arsentyeva
 
-#include "pch.h"
+//#include "pch.h"
+#include "../..gtest/gtest.h"
+// ! скачать Google Test
+
 #include "../BinarySearchTree/BinarySearchTree.h"
 
 
