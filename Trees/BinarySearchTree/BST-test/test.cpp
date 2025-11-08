@@ -1,10 +1,10 @@
 //@author: Natalya Arsentyeva
 
-//#include "pch.h"
-#include "../googletest-main/googletest/include/gtest/gtest.h"
+#include "pch.h"
+//#include "../googletest-main/googletest/include/gtest/gtest.h"
 // ! скачать Google Test
 
-#include "../BinarySearchTree/BinarySearchTree.h"
+#include "../BinarySearchTree.h"
 
 
 // Тестирование бинарного дерева поиска (BST)
@@ -160,7 +160,7 @@ TreeNode<int>* createTree4() {
 
 
 // Тест конструкторов по умолчанию, копирования, оператора копирования
-TEST(TestBST, TestConstructors) 
+TEST(TestBST, TestConstructors)
 {
     vector <int> vec1, vec2;
 
@@ -168,7 +168,7 @@ TEST(TestBST, TestConstructors)
     BinarySearchTree<int> bst1(createTree2());
     BinarySearchTree<int> bst2 = bst1;
 
-    
+
     createVectorNLR(bst1.get_root(), vec1);
     createVectorNLR(bst2.get_root(), vec2);
 
@@ -201,7 +201,7 @@ TEST(TestBST, TestConstructors)
 
     EXPECT_EQ(bst6.Size(), 0);
     EXPECT_EQ(bst6.Empty(), true);
-    
+
 
     // Дерево с одним узлом
     TreeNode<int>* root = new TreeNode<int>(42);
@@ -222,9 +222,9 @@ TEST(TestBST, TestInsert)
 
     BinarySearchTree<int> bst1(createTree4());
 
-     // Завершённое дерево
-     //          8
-     //       /    \
+    // Завершённое дерево
+    //          8
+    //       /    \
      //      4      10
      //    /   \    / \
      //   2     7   9   30
@@ -253,14 +253,14 @@ TEST(TestBST, TestRemove)
 
     BinarySearchTree<int> bst1(createTree4());
 
-     //         8
-     //       /    \
+    //         8
+    //       /    \
      //      4      10
      //    /   \    / \
      //   2     7   9   30
      //  / \    /       
      // 1   3  5      
-     
+
     // Удаление узла без потомков
     bst1.Remove(9);
     createVectorNLR(bst1.get_root(), result);
@@ -285,8 +285,8 @@ TEST(TestBST, TestRemove)
     result.clear();
 
 
-     //         8
-     //       /    \
+    //         8
+    //       /    \
      //      4      10
      //    /   \      \
      //   2     5       30

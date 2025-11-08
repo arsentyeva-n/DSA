@@ -128,8 +128,7 @@ private:
 
 public:
     // Конструктор, получающий указатель на голову списка
-    // explicit — запрещает неявное преобразование типов
-    explicit LinkedListIterator(Node<T>* head1) {
+    LinkedListIterator(Node<T>* head1) {
         start = head1;
         current = start;
     }

@@ -38,7 +38,7 @@ public:
     bool empty() const;                  // Проверка на пустоту
     void clear();                        // Очистка кучи
     int search(const T& value) const;    // Поиск элемента в куче
-    
+    vector<T> HeapToVector() const;
 
 };
 
@@ -170,6 +170,12 @@ void Heap<T>::printList() {
     cout << endl;
 }
 
+// Вернуть вектор кучи
+template<typename T>
+vector<T> Heap<T>::HeapToVector() const {
+    return lst;
+}
+
 // Поиск элемента в куче и вывод его индекса, О(n)
 template<typename T>
 int Heap<T>::search(const T& value) const
@@ -184,7 +190,7 @@ int Heap<T>::search(const T& value) const
     return -1;
 }
 
-// Создание кучи на основе бинарного дерева, O(n log n)
+// Создание кучи на основе бинарного дерева, O(n log n) неэффективно
 template <typename T>
 Heap<T> buildHeapBinTree(TreeNode<T>* root)
 {
@@ -227,7 +233,7 @@ vector<T> buildHeapArr(TreeNode<T>* root)
     if (root != nullptr)
     {
         
-        queue<T> q;
+        queue<TreeNode<T>*> q;
         // Сохраняем корень в очередь
         q.push(root);
 
@@ -236,7 +242,7 @@ vector<T> buildHeapArr(TreeNode<T>* root)
         {
             // Извлекаем первый элемент из очереди и добавляем в кучу
             TreeNode<T>* node = q.front();
-            elements.insert(node->Data());
+            elements.push_back(node->Data());
 
             // Удаляем текущий узел и переходим к следующим
             q.pop();
@@ -252,7 +258,7 @@ vector<T> buildHeapArr(TreeNode<T>* root)
 }
 
 
-// Сортировка кучей, сложность во всех случаях O(n log n) 
+// Сортировка кучей по возрастанию, сложность во всех случаях O(n log n) 
 template <typename T>
 void sort(vector<T>& elements)
 {

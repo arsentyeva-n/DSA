@@ -39,5 +39,10 @@ int main() {
     }
     cout << endl;
 
+    it.next();
+    it.reset();
+    it.next();
+    cout << it.get_data() << " ";
+
     return 0;
 }
