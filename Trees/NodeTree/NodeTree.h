@@ -493,6 +493,7 @@ TreeNode<T>* removeNode(TreeNode<T>* root, const T value) {
 
 	// Ѕазовый случай, пустое дерево или узел не найден
 	if (root == nullptr) {
+		//throw std::runtime_error("ѕопытка удалени€ из пустого дерева");
 		return nullptr;
 	}
 

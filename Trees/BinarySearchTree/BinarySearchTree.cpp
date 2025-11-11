@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include "BinarySearchTree.h"
-
+#include <stdexcept>
 
 
 int main() {
@@ -41,48 +41,38 @@ int main() {
     cout << "\nРазмер: " << bst1.Size() << "\n"; // Ожидается: 9
 
     // Конструктор копирования
-    cout << "\nКонструктор копирования: \n";
-    BinarySearchTree<int> bst2 = bst1;
+    BinarySearchTree<int> bst2(bst1);
     printNLR(bst2.get_root());
 
-    // Конструктор с параметром
-    cout << "\nДерево конструктора с параметром: \n";
-    BinarySearchTree<int> bst3(bst1);
+    // Конструктор оператора копирования
+    BinarySearchTree<int> bst3;
+    bst3 = bst1;
     printNLR(bst3.get_root());
 
-    //          12
-    //       /     \
-    //      8      15
-    //    /   \     / \
-    //   4     10 13   30
-    //  / \             \      
-    // 1   5            100
-    // Вставка
-    bst3.Insert(100);
-    bst3.Insert(6);
-    cout << "\nДерево после вставки 100 и 6: \n";
-    BFS(bst3.get_root()); 
-    cout << "\nРазмер: " << bst3.Size() << "\n"; 
+    try {
+    BinarySearchTree<int> bst4;
 
-    //          12
-    //       /     \
-    //      8      15
-    //    /   \     / \
-    //   4     10 13   30
-    //  / \             \      
-    // 1   5            100
-    //      \
-    //       6
+    bst4.Insert(2);
+    bst4.Insert(4);
+    bst4.Insert(8);
+    bst4.Insert(16);
+    bst4.Insert(32);
 
-    cout << "\nДерево присваивания: \n";
-    bst3 = bst2;
-    printNLR(bst3.get_root()); 
-    cout << "\nРазмер: " << bst3.Size() << "\n"; // 9
-
-    bst1.Clear();
-    cout << "\nРазмер после удаления: " << bst1.Size() << "\n"; // Ожидается: 0
+    // Конструктор перемещения
+    BinarySearchTree<int> bst5 = move(bst4);
+    printNLR(bst5.get_root());
 
     
+    // Конструктор оператора перемещения
+    BinarySearchTree<int> bst6;
+    bst6 = move(bst5);
+    printNLR(bst6.get_root());
 
+   // bst5.Remove(4); 
+    }
+    catch (const exception& e)
+    {
+        cout << "\nОбъект уже перемещен! " << e.what() << endl;
+    }
     return 0;
 }

@@ -26,7 +26,10 @@ public:
 	BinarySearchTree(TreeNode<T>* tree);
 
 	// Конструктор копирования
-	BinarySearchTree (const BinarySearchTree<T>& tree);
+	BinarySearchTree(const BinarySearchTree<T>& tree);
+
+	// Конструктор перемещения
+	BinarySearchTree(BinarySearchTree<T>&& tree) noexcept;
 
 	// Деструктор
 	~BinarySearchTree() { deleteTree(root); };
@@ -40,9 +43,11 @@ public:
 	//find
 
 	// Оператор присваивания копированием
-	BinarySearchTree<T>& operator=( const BinarySearchTree<T>& tree);
+	BinarySearchTree<T>& operator =(const BinarySearchTree<T>& tree);
 
-	// 2 конструктора, правило пяти
+	// Оператор присваивания перемещения
+	BinarySearchTree<T>& operator =( BinarySearchTree<T>&& tree) noexcept;
+
 };
 
 // Конструктор по умолчанию
@@ -53,7 +58,7 @@ BinarySearchTree<T>::BinarySearchTree()
 	size = 0;
 }
 
-// Конструктор с параметрами
+// Конструктор с параметром
 template <typename T>
 BinarySearchTree<T>::BinarySearchTree(TreeNode<T>* tree)
 {
@@ -63,30 +68,81 @@ BinarySearchTree<T>::BinarySearchTree(TreeNode<T>* tree)
 
 // Конструктор копирования
 template <typename T>
-BinarySearchTree<T>::BinarySearchTree(const BinarySearchTree<T>& tree) 
+BinarySearchTree<T>::BinarySearchTree(const BinarySearchTree<T>& tree)
 {
 	// Если параметр  не пустой
 	if (tree.root != nullptr) {
+		
+		cout << "\nКонструктор копирования" << endl;
+
 		root = copyTree(tree.root);
 		size = tree.size;
+		
 	}
+
 }
 
-
-// Конструктор присваивания и копирования
+// Конструктор перемещения
 template <typename T>
-BinarySearchTree<T>& BinarySearchTree<T>::operator= (const BinarySearchTree<T>& tree)
+BinarySearchTree<T>::BinarySearchTree(BinarySearchTree<T>&& tree) noexcept
+{
+	// Если параметр  не пустой
+	if (tree.root != nullptr) {
+		cout << "\nКонструктор перемещения" << endl;
+
+		// Старую память используем в новом объекте, можно использовать swap
+		root = tree.root;
+		size = tree.size;
+		
+		// Удаляем старый объект
+		tree.root = nullptr;
+		tree.size = 0;
+	}
+
+}
+
+// Оператор копирования
+template <typename T>
+BinarySearchTree<T>& BinarySearchTree<T>::operator = (const BinarySearchTree<T>& tree) 
 {
 	// Нельзя копировать в само себя
 	if (this == &tree) return *this;
-	
+
+	cout << "\nОператор копирования" << endl;
+
 	// Очистить текущее дерево
 	Clear();
 
 	// Копирование нового дерева
 	this->root = copyTree(tree.root);
 	this->size = tree.size;
+
 	
+	// Возвратить ссылку на текущий объект
+	return *this;
+}
+
+// Оператор перемещения
+template <typename T>
+BinarySearchTree<T>& BinarySearchTree<T>::operator = (BinarySearchTree<T>&& tree) noexcept
+{
+	// Нельзя копировать в само себя
+	if (this == &tree) return *this;
+	
+	cout << "\nОператор перемещения" << endl;
+
+	// Очистить текущее дерево
+	Clear();
+
+	// Старую память используем в новом объекте, можно использовать swap
+	// Копирование нового дерева
+	this->root = tree.root;
+	this->size = tree.size;
+
+	// Удаляем старый объект
+	tree.root = nullptr;
+	tree.size = 0;
+
 	
 	// Возвратить ссылку на текущий объект
 	return *this;

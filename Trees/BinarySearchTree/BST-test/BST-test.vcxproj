@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9b7df72c-ce7d-42eb-b713-bb575da4ad06}</ProjectGuid>
+    <ProjectGuid>{641d6ef3-d899-4389-a09f-65cce8d06f60}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
     <ConfigurationType>Application</ConfigurationType>
