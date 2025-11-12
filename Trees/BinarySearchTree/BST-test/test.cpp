@@ -159,59 +159,124 @@ TreeNode<int>* createTree4() {
 }
 
 
-// Тест конструкторов по умолчанию, копирования, оператора копирования
-TEST(TestBST, TestConstructors)
-{
-    vector <int> vec1, vec2;
 
-    // Обычное
-    BinarySearchTree<int> bst1(createTree2());
-    BinarySearchTree<int> bst2 = bst1;
+// Тест конструктора по умолчанию
+TEST(TestBST, DefaultConstructor) {
+    BinarySearchTree<int> tree;
 
-
-    createVectorNLR(bst1.get_root(), vec1);
-    createVectorNLR(bst2.get_root(), vec2);
-
-    EXPECT_EQ(vec1, vec2);
-    vec1.clear(); vec2.clear();
-
-    // Вырожденное вправо
-    BinarySearchTree<int> bst3(createTree1());
-    BinarySearchTree<int> bst4 = bst3;
-
-    createVectorNLR(bst3.get_root(), vec1);
-    createVectorNLR(bst4.get_root(), vec2);
-
-    EXPECT_EQ(vec1, vec2);
-    vec1.clear(); vec2.clear();
+    EXPECT_TRUE(tree.Empty());
+    EXPECT_EQ(tree.Size(), 0);
+    EXPECT_EQ(tree.get_root(), nullptr);
+}
 
 
-    // Вырожденное влево
-    BinarySearchTree<int> bst5(createTree3());
-    bst1 = bst5;
-    createVectorNLR(bst1.get_root(), vec1);
-    createVectorNLR(bst5.get_root(), vec2);
 
-    EXPECT_EQ(vec1, vec2);
-    vec1.clear(); vec2.clear();
+// Тест конструктора копирования
+TEST(TestBST, CopyConstructor) {
+    BinarySearchTree<int> original = createTree3();
+
+    // Используем конструктор копирования
+    BinarySearchTree<int> copy(original);
+
+    // Проверяем, что размер одинаковый
+    EXPECT_EQ(original.Size(), copy.Size());
+
+    // Проверяем, что структура одинаковая
+    vector<int> exp,result;
+    createVectorNLR(original.get_root(), exp);
+    createVectorNLR(copy.get_root(), result);
+    EXPECT_EQ(original.Size(), copy.Size());
+    EXPECT_EQ(exp, result);
+
+    // Проверяем, что это разные объекты
+    EXPECT_NE(original.get_root(), copy.get_root());
+
+    // Изменяем оригинал - копия не должна измениться
+    original.Insert(25);
+    EXPECT_EQ(original.Size(), 6);
+    EXPECT_EQ(copy.Size(), 5);
+}
+
+// Тест оператора присваивания копированием
+TEST(TestBST, CopyAssignmentOperator) {
+    BinarySearchTree<int> original = createTree1();
+    BinarySearchTree<int> copy;
+
+    // Используем оператор присваивания копированием
+    copy = original;
+
+    // Проверяем, что размер одинаковый
+    EXPECT_EQ(original.Size(), copy.Size());
+
+    // Проверяем, что структура одинаковая
+    vector<int> exp, result;
+    createVectorNLR(original.get_root(), exp);
+    createVectorNLR(copy.get_root(), result);
+    EXPECT_EQ(original.Size(), copy.Size());
+    EXPECT_EQ(exp, result);
+
+    // Проверяем, что это разные объекты
+    EXPECT_NE(original.get_root(), copy.get_root());
+
+    // Изменяем оригинал - копия не должна измениться
+    original.Insert(25);
+    EXPECT_EQ(original.Size(), 7);
+    EXPECT_EQ(copy.Size(), 6);
+
+    // Проверяем самоприсваивание
+    copy = copy;  
+    EXPECT_EQ(copy.Size(), 6);
+}
 
 
-    // Пустое дерево
-    BinarySearchTree<int> bst6;
+// Тест конструктора перемещения
+TEST(TestBST, MoveConstructor) {
+    BinarySearchTree<int> original = createTree1();
 
-    EXPECT_EQ(bst6.Size(), 0);
-    EXPECT_EQ(bst6.Empty(), true);
+    size_t originalSize = original.Size();
+    TreeNode<int>* originalRoot = original.get_root();
 
+    // Используем конструктор перемещения
+    BinarySearchTree<int> moved(move(original));
 
-    // Дерево с одним узлом
-    TreeNode<int>* root = new TreeNode<int>(42);
-    BinarySearchTree<int> bst7(root);
-    bst3 = bst7;
-    createVectorNLR(bst3.get_root(), vec1);
-    createVectorNLR(bst7.get_root(), vec2);
+    // Проверяем что данные переместились
+    EXPECT_EQ(moved.Size(), originalSize);
+    EXPECT_EQ(moved.get_root(), originalRoot);
 
-    EXPECT_EQ(vec1, vec2);
-    vec1.clear(); vec2.clear();
+    // Проверяем что оригинал обнулился
+    EXPECT_TRUE(original.Empty());
+    EXPECT_EQ(original.Size(), 0);
+    EXPECT_EQ(original.get_root(), nullptr);
+
+    // Проверяем что перемещенный объект работает
+    EXPECT_FALSE(moved.Empty());
+    moved.Insert(6);
+    EXPECT_EQ(moved.Size(), 7);
+}
+
+// Тест оператора присваивания перемещением
+TEST(TestBST, MoveAssignmentOperator) {
+    BinarySearchTree<int> original = createTree1();
+
+    BinarySearchTree<int> moved;
+
+    size_t originalSize = original.Size();
+    TreeNode<int>* originalRoot = original.get_root();
+
+    // Используем оператор присваивания перемещением
+    moved = move(original);
+
+    // Проверяем перемещение
+    EXPECT_EQ(moved.Size(), originalSize);
+    EXPECT_EQ(moved.get_root(), originalRoot);
+
+    // Проверяем что источник обнулился
+    EXPECT_TRUE(original.Empty());
+    EXPECT_EQ(original.Size(), 0);
+    EXPECT_EQ(original.get_root(), nullptr);
+
+    // Проверяем самоприсваивание перемещением
+    moved = move(moved); 
 }
 
 
@@ -311,3 +376,25 @@ TEST(TestBST, TestRemove)
 
 
 }
+
+
+// Тест очистки дерева
+TEST(TestBST, ClearTree) {
+    BinarySearchTree<int> tree;
+
+    tree.Insert(10);
+    tree.Insert(5);
+    tree.Insert(15);
+
+    EXPECT_FALSE(tree.Empty());
+    EXPECT_EQ(tree.Size(), 3);
+
+    tree.Clear();
+
+    EXPECT_TRUE(tree.Empty());
+    EXPECT_EQ(tree.Size(), 0);
+    EXPECT_EQ(tree.get_root(), nullptr);
+}
+
+
+

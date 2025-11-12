@@ -21,6 +21,9 @@ private:
 public:
 	// Конструктор по умолчанию
 	BinarySearchTree();
+	
+	// Деструктор
+	~BinarySearchTree() { deleteTree(root); };
 
 	// Конструктор с параметром
 	BinarySearchTree(TreeNode<T>* tree);
@@ -28,11 +31,14 @@ public:
 	// Конструктор копирования
 	BinarySearchTree(const BinarySearchTree<T>& tree);
 
+	// Оператор присваивания копированием
+	BinarySearchTree<T>& operator =(const BinarySearchTree<T>& tree);
+
 	// Конструктор перемещения
 	BinarySearchTree(BinarySearchTree<T>&& tree) noexcept;
 
-	// Деструктор
-	~BinarySearchTree() { deleteTree(root); };
+	// Оператор присваивания перемещения
+	BinarySearchTree<T>& operator =( BinarySearchTree<T>&& tree) noexcept;
 
 	size_t Size() const;
 	void Insert(const T& item);
@@ -40,14 +46,6 @@ public:
 	TreeNode<T>* get_root() const;
 	void Clear();
 	bool Empty() const;
-	//find
-
-	// Оператор присваивания копированием
-	BinarySearchTree<T>& operator =(const BinarySearchTree<T>& tree);
-
-	// Оператор присваивания перемещения
-	BinarySearchTree<T>& operator =( BinarySearchTree<T>&& tree) noexcept;
-
 };
 
 // Конструктор по умолчанию
